@@ -1,4 +1,4 @@
-# GenAI-Learning-Log
+# GenAI Learning Log
 「学習」と「AI開発の記録」を統合したツール。
 
 近日公開予定
