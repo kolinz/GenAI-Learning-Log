@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+    {% block title %}RAGAS評価を実行{% endblock %}
+
+    {% block content %}
+        <h1>RAGAS評価を実行</h1>
+        <p class="lead">RAGシステムに質問を投げかけ、コンテキストとなる学習メモを選択して評価を実行します。</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="mb-3">
+                    {% if field.name == 'memos_for_context' %}
+                        <label class="form-label d-block">{{ field.label }}</label>
+                        <div class="border rounded p-3 bg-light" style="max-height: 300px; overflow-y: auto;">
+                            {% for checkbox in field %}
+                                <div class="form-check">
+                                    {{ checkbox.tag }}
+                                    <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if field.help_text %}
+                            <div class="form-text text-muted">{{ field.help_text }}</div>
+                        {% endif %}
+                    {% else %}
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="form-text text-muted">{{ field.help_text }}</div>
+                        {% endif %}
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary mt-3">評価を実行</button>
+            <a href="{% url 'rag_evaluator_tool:evaluator_home' %}" class="btn btn-secondary mt-3">キャンセル</a>
+        </form>
+    {% endblock %}

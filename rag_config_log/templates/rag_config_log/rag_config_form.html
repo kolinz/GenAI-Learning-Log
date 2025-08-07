@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load filename_extras %}
+
+{% block title %}{% if form.instance.pk %}RAG構成を編集{% else %}新しいRAG構成を作成{% endif %}{% endblock %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}RAG構成を編集{% else %}新しいRAG構成を作成{% endif %}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="mb-3">
+                {% if field.name == 'used_memos' %}
+                    <label class="form-label d-block">{{ field.label }}</label>
+                    <div class="border rounded p-3 bg-light" style="max-height: 200px; overflow-y: auto;">
+                        {% for checkbox in field %}
+                            <div class="form-check">
+                                {{ checkbox.tag }}
+                                <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if field.help_text %}
+                        <div class="form-text text-muted">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                {% elif field.name == 'rag_workflow_tool' %}
+                    {# このフィールドは削除したため、レンダリングしない #}
+                {% elif field.field.widget.input_type == 'checkbox' %}
+                    <label class="form-label d-block">{{ field.label }}</label>
+                    {% for checkbox in field %}
+                        <div class="form-check form-check-inline">
+                            {{ checkbox.tag }}
+                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="form-text text-muted">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a href="{% url 'rag_config_log:rag_config_list' %}" class="btn btn-secondary">キャンセル</a>
+    </form>
+{% endblock %}

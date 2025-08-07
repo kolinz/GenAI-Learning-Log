@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}メモを削除{% endblock %}
+
+{% block content %}
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">本当にこのメモを削除しますか？</h4>
+        <p>以下のメモが完全に削除されます。この操作は元に戻せません。</p>
+        <ul>
+            <li><strong>科目:</strong> {{ memo.subject }}</li>
+            <li><strong>年度:</strong> {{ memo.year }}</li>
+            <li><strong>授業日:</strong> {{ memo.lesson_date|date:"Y年m月d日" }}</li>
+            <li><strong>作成者:</strong> {{ memo.user.username }}</li>
+        </ul>
+        <hr>
+        <p class="mb-0">このメモに関連するすべてのデータが失われます。</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger me-2">削除する</button>
+        <a href="{% url 'memo_app:memo_detail' memo.pk %}" class="btn btn-secondary">キャンセル</a>
+    </form>
+{% endblock %}

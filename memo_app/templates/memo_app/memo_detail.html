@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+    {% load markdown_extras %}
+    {% load filename_extras %}
+
+    {% block title %}メモ詳細 - {{ memo.subject }}{% endblock %}
+
+    {% block content %}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="card-title text-primary">{{ memo.subject }} ({{ memo.year }})</h2>
+                <h6 class="card-subtitle mb-3 text-muted">作成者: {{ memo.user.username }}</h6>
+                <p class="card-text"><strong>授業日:</strong> {{ memo.lesson_date|date:"Y年m月d日" }}</p>
+
+                {% if memo.tags.all %}
+                    <div class="mb-3">
+                        <strong>タグ:</strong>
+                        {% for tag in memo.tags.all %}
+                            <a href="{% url 'memo_app:tagged_memo_list' tag.name %}" class="badge bg-info text-dark text-decoration-none">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <hr>
+
+                <div class="mb-4">
+                    <h5 class="text-secondary">学習したこと（マークダウン）:</h5>
+                    <div class="border rounded p-3 bg-light markdown-content">
+                        {{ memo.input_text|markdownify|safe }}
+                    </div>
+                </div>
+
+                {% if memo.instruction_text %}
+                    <div class="mb-4">
+                        <h5 class="text-secondary">想定される質問例:</h5>
+                        <div class="border rounded p-3 bg-light markdown-content">
+                            {{ memo.instruction_text|markdownify|safe }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if memo.output_text %}
+                    <div class="mb-4">
+                        <h5 class="text-secondary">質問への回答例:</h5>
+                        <div class="border rounded p-3 bg-light markdown-content">
+                            {{ memo.output_text|markdownify|safe }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if memo.attachments.all %}
+                    <hr>
+                    <h5 class="text-secondary mb-3">添付ファイル</h5>
+                    <ul class="list-group mb-4">
+                        {% for attachment in memo.attachments.all %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>
+                                    <i class="bi bi-file-earmark"></i>
+                                    <a href="{{ attachment.file.url }}" target="_blank" class="text-decoration-none ms-2">
+                                        {{ attachment.file.name|filename }}
+                                    </a>
+                                    {% if attachment.description %}
+                                        <small class="text-muted ms-2">({{ attachment.description }})</small>
+                                    {% endif %}
+                                </span>
+                                <small class="text-muted">{{ attachment.uploaded_at|date:"Y/m/d H:i" }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <p class="text-muted small mt-4 mb-1">作成日時: {{ memo.created_at|date:"Y年m月d日 H:i" }}</p>
+                <p class="text-muted small">最終更新日時: {{ memo.updated_at|date:"Y年m月d日 H:i" }}</p>
+
+                <div class="mt-4">
+                    <a href="{% url 'memo_app:memo_list' %}" class="btn btn-secondary me-2">一覧に戻る</a>
+                    {% if memo.user == request.user %}
+                        <a href="{% url 'memo_app:memo_update' memo.pk %}" class="btn btn-warning me-2">編集</a>
+                        <a href="{% url 'memo_app:memo_delete' memo.pk %}" class="btn btn-danger">削除</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}

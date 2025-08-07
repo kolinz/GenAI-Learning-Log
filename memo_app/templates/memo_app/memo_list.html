@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load markdown_extras %}
+{% load filename_extras %}
+
+{% block title %}学習メモ一覧{% endblock %}
+
+{% block content %}
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">学習メモギャラリー</h1>
+                <p class="lead text-muted">
+                    これまでに学習した内容を記録したメモの一覧です。カードをクリックして詳細を確認したり、新しいメモを作成したりできます。
+                </p>
+                <p>
+                    <a href="{% url 'memo_app:memo_create' %}" class="btn btn-primary my-2 me-2">新しいメモを作成</a>
+                    <a href="{% url 'memo_app:learning_memo_export_csv' %}" class="btn btn-secondary my-2">メモをCSVでエクスポート</a>
+                </p>
+                {% if current_tag %}
+                    <p class="h4">現在のタグ: <span class="badge bg-info text-dark">{{ current_tag }}</span></p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            {% if memos %}
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for memo in memos %}
+                        <div class="col">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title text-primary">{{ memo.subject }} - {{ memo.year }}年 ({{ memo.lesson_date|date:"Y/m/d" }})</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted small">作成者: {{ memo.user.username }}</h6>
+                                    <p class="card-text flex-grow-1 markdown-content">{{ memo.input_text|truncatechars:100|markdownify }}</p>
+
+                                    {% if memo.tags.all %}
+                                        <div class="d-flex flex-wrap mb-2">
+                                            {% for tag in memo.tags.all %}
+                                                <a href="{% url 'memo_app:tagged_memo_list' tag.name %}" class="badge bg-secondary text-decoration-none me-1 mb-1">{{ tag.name }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                                        <div class="btn-group">
+                                            <a href="{% url 'memo_app:memo_detail' memo.pk %}" class="btn btn-sm btn-outline-secondary">詳細</a>
+                                            {% if memo.user == request.user %}
+                                                <a href="{% url 'memo_app:memo_update' memo.pk %}" class="btn btn-sm btn-outline-warning">編集</a>
+                                                <a href="{% url 'memo_app:memo_delete' memo.pk %}" class="btn btn-sm btn-outline-danger">削除</a>
+                                            {% endif %}
+                                        </div>
+                                        <small class="text-muted">{{ memo.updated_at|date:"Y/m/d" }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="alert alert-info text-center" role="alert">
+                                まだメモがありません。新しいメモを作成しましょう！
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if is_paginated %}
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">前へ</a></li>
+                            {% endif %}
+                            {% for i in paginator.page_range %}
+                                {% if page_obj.number == i %}
+                                    <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">次へ</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-info text-center" role="alert">
+                    まだメモがありません。新しいメモを作成しましょう！
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

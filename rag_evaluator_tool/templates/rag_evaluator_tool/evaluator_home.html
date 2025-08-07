@@ -1,0 +1,42 @@
+ {% extends 'base.html' %}
+
+    {% block title %}RAG評価実行ツール{% endblock %}
+
+    {% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 text-center">
+            <h1 class="display-5 mb-4">RAGAS評価ツール (ベータ版)</h1>
+            <p class="lead mb-4">
+                {{ message }}
+            </p>
+            <p class="mb-4">
+                ここでは、RAGASライブラリを使ってRAGシステムの評価を自動化する機能を提供します。<br>
+                評価を実行するには、APIキーの設定や、評価対象のデータ（質問文、回答、コンテキスト）が必要です。
+            </p>
+
+            <div class="card shadow-sm mx-auto mb-4" style="max-width: 600px;">
+                <div class="card-body">
+                    <h5 class="card-title">現在の設定状況</h5>
+                    <p>評価用LLM APIキー: <strong>{{ api_key_status }}</strong></p>
+                    <p>
+                        <a href="#" class="btn btn-primary mt-2">APIキーを設定する (今後実装)</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+                <div class="card-body">
+                    <h5 class="card-title">評価の実行</h5>
+                    <p>
+                        既存のRAG評価ログのデータを使ってRAGAS評価を再実行したり、新しい評価を実行できます。<br>
+                        ※ 現時点では、RAG評価結果の手動入力が推奨されます。<br>
+                        自動実行機能は将来的な拡張で追加されます。
+                    </p>
+                    <a href="{% url 'rag_evaluator_tool:run_evaluation' %}" class="btn btn-success mt-2 me-3">RAGAS評価を実行する</a>
+                    <a href="{% url 'rag_app:rag_evaluation_list' %}" class="btn btn-info mt-2">既存の評価ログを見る</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endblock %}

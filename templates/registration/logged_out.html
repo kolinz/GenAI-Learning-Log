@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}ログアウト{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-header text-center bg-success text-white">
+                <h3 class="mb-0">ログアウトしました</h3>
+            </div>
+            <div class="card-body text-center">
+                <p class="card-text">ご利用ありがとうございました。</p>
+                <a href="{% url 'login' %}" class="btn btn-primary mt-3">再度ログインする</a>
+                <p class="mt-3 text-muted">
+                    <a href="{% url 'memos:memo_list' %}">メモ一覧へ戻る</a> (ログインしていないと見れません)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

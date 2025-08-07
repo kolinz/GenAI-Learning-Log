@@ -1,0 +1,23 @@
+ {% extends 'base.html' %}
+
+    {% block title %}RAG評価を削除{% endblock %}
+
+    {% block content %}
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">本当にこのRAG評価ログを削除しますか？</h4>
+            <p>以下の評価ログが完全に削除されます。この操作は元に戻せません。</p>
+            <ul>
+                <li><strong>質問文:</strong> {{ evaluation.question|truncatechars:100 }}</li>
+                <li><strong>評価日時:</strong> {{ evaluation.evaluation_date|date:"Y年m月d日 H:i" }}</li>
+                <li><strong>RAG構成:</strong> {{ evaluation.rag_config.config_name }}</li>
+            </ul>
+            <hr>
+            <p class="mb-0">このログに関連するすべてのデータが失われます。</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger me-2">削除する</button>
+            <a href="{% url 'rag_app:rag_evaluation_detail' evaluation.pk %}" class="btn btn-secondary">キャンセル</a>
+        </form>
+    {% endblock %}

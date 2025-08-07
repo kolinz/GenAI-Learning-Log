@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+    {% block title %}RAG評価ログ一覧{% endblock %}
+
+    {% block content %}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>RAG評価ログ</h1>
+            <a href="{% url 'rag_app:rag_evaluation_create' %}" class="btn btn-primary">新しいRAG評価を作成</a>
+        </div>
+
+        {% if evaluations %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>評価日時</th>
+                            <th>評価者</th>
+                            <th>RAG構成</th>
+                            <th>質問文</th>
+                            <th>Faithfulness</th>
+                            <th>Answer Relevancy</th>
+                            <th>Context Precision</th>
+                            <th>Context Recall</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for eval in evaluations %}
+                            <tr>
+                                <td>{{ eval.evaluation_date|date:"Y/m/d H:i" }}</td>
+                                <td>{{ eval.evaluator.username|default:"N/A" }}</td>
+                                <td><a href="{% url 'rag_config_log:rag_config_detail' eval.rag_config.pk %}" class="text-decoration-none">{{ eval.rag_config.config_name }}</a></td>
+                                <td>{{ eval.question|truncatechars:50 }}</td>
+                                <td><span class="badge bg-primary">{{ eval.faithfulness_display }}</span></td>
+                                <td><span class="badge bg-success">{{ eval.answer_relevancy_display }}</span></td>
+                                <td><span class="badge bg-info text-dark">{{ eval.context_precision_display }}</span></td>
+                                <td><span class="badge bg-warning text-dark">{{ eval.context_recall_display }}</span></td>
+                                <td>
+                                    <a href="{% url 'rag_app:rag_evaluation_detail' eval.pk %}" class="btn btn-info btn-sm me-2">詳細</a>
+                                    {% if eval.evaluator == request.user or request.user.is_superuser %}
+                                        <a href="{% url 'rag_app:rag_evaluation_update' eval.pk %}" class="btn btn-warning btn-sm me-2">編集</a>
+                                        <a href="{% url 'rag_app:rag_evaluation_delete' eval.pk %}" class="btn btn-danger btn-sm">削除</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if is_paginated %}
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">前へ</a></li>
+                        {% endif %}
+                        {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">次へ</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                まだRAG評価ログがありません。
+            </div>
+        {% endif %}
+
+    {% endblock %}
