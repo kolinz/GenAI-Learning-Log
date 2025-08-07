@@ -5,22 +5,27 @@ GenAI Learning Logへようこそ！このプロジェクトは、Django 5.2 を
 - RAG評価ログ: RAGASの評価結果記録
 - RAG評価ツール：今後実装予定
 
-## セットアップ（作成中です）
+# 開発計画
+[ ] 検索機能
+[ ] 各項目へのツールチップ
+[ ] 多言語化 
+
+# セットアップ（作成中です）
 このアプリケーションは、Docker Compose を使って簡単に開発・運用できます。
 
-### 依存関係のインストール
+## 依存関係のインストール
 ローカルPCに以下のソフトウェアがインストールされていることを確認してください。
  - Docker Engine
  - Docker Compose
 
-### プロジェクトのクローン
+## プロジェクトのクローン
 このリポジトリをローカルにクローンします。
 ```
 git clone https://github.com/kolinz/GenAI-Learning-Log.git
 cd GenAI-Learning-Log
 ```
 
-### 開発環境での起動方法
+## 開発環境での起動方法
 この手順では、ホットリロード機能を持つDjango開発サーバーとPostgreSQLデータベースをDockerコンテナで起動します。
 
 1. 環境設定ファイル (.env.dev) の準備
@@ -47,7 +52,7 @@ docker-compose exec web python manage.py createsuperuser
 4. アプリケーションへのアクセス
 ブラウザで http://localhost:8000/memos/ にアクセスすると、アプリケーションを利用できます。
 
-### 本番環境での運用方法
+## 本番環境での運用方法
 この手順では、Nginxをリバースプロキシとして使用し、GunicornでDjangoアプリケーションを動かします。
 
 1. 環境設定ファイル (.env.prod) の準備
