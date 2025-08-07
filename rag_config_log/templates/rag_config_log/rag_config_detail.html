@@ -1,24 +1,25 @@
 {% extends 'base.html' %}
 {% load markdown_extras %}
 {% load filename_extras %}
+{% load i18n %}
 
-{% block title %}RAG構成詳細 - {{ config.config_name }}{% endblock %}
+{% block title %}{% trans "AIエージェント構成詳細" %} - {{ config.config_name }}{% endblock %}
 
 {% block content %}
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h2 class="card-title text-primary">{{ config.config_name }}</h2>
-            <h6 class="card-subtitle mb-3 text-muted">作成者: {{ config.user.username }}</h6>
+            <h6 class="card-subtitle mb-3 text-muted">{% trans "作成者" %}: {{ config.user.username }}</h6>
 
             <hr>
-            <h4 class="text-secondary mb-3">RAGシステム構成</h4>
-            <p><strong>LLM:</strong> {{ config.rag_model_name }} {% if config.rag_model_version %}(v{{ config.rag_model_version }}){% endif %}</p>
-            <p><strong>Embeddingモデル:</strong> {{ config.embedding_model_name }} {% if config.embedding_model_version %}(v{{ config.embedding_model_version }}){% endif %}</p>
-            <p><strong>RAGツール:</strong> {{ config.rag_tool_name|default:"-" }} {% if config.rag_tool_version %}(v{{ config.rag_tool_version }}){% endif %}</p>
-            <p><strong>RAGの種類:</strong> {{ config.get_rag_type_display }}</p>
+            <h4 class="text-secondary mb-3">{% trans "AIエージェント構成" %}</h4>
+            <p><strong>{% trans "LLM" %}:</strong> {{ config.rag_model_name }} {% if config.rag_model_version %}(v{{ config.rag_model_version }}){% endif %}</p>
+            <p><strong>{% trans "Embeddingモデル" %}:</strong> {{ config.embedding_model_name }} {% if config.embedding_model_version %}(v{{ config.embedding_model_version }}){% endif %}</p>
+            <p><strong>{% trans "ツール" %}:</strong> {{ config.rag_tool_name|default:"-" }} {% if config.rag_tool_version %}(v{{ config.rag_tool_version }}){% endif %}</p>
+            <p><strong>{% trans "RAGの種類" %}:</strong> {{ config.get_rag_type_display }}</p>
 
             {% if config.rag_workflow_file %}
-                <p><strong>ワークフローファイル:</strong>
+                <p><strong>{% trans "ワークフローファイル" %}:</strong>
                     <a href="{{ config.rag_workflow_file.url }}" target="_blank" class="text-decoration-none">
                         <i class="bi bi-file-earmark"></i> {{ config.rag_workflow_file.name|filename }}
                     </a>
@@ -27,7 +28,7 @@
 
             {% if config.description %}
                 <div class="mb-4 mt-4">
-                    <h5 class="text-secondary">詳細説明:</h5>
+                    <h5 class="text-secondary">{% trans "詳細説明" %}:</h5>
                     <div class="border rounded p-3 bg-light markdown-content">
                         {{ config.description|markdownify|safe }}
                     </div>
@@ -35,7 +36,7 @@
             {% endif %}
             
             <hr>
-            <h4 class="text-secondary mb-3">使用した学習メモ</h4>
+            <h4 class="text-secondary mb-3">{% trans "使用した学習メモ" %}</h4>
             {% if config.used_memos.all %}
                 <ul class="list-group mb-4">
                     {% for memo in config.used_memos.all %}
@@ -50,18 +51,18 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p class="text-muted">このRAG構成には、使用された学習メモが登録されていません。</p>
+                <p class="text-muted">{% trans "このAIエージェント構成には、使用された学習メモが登録されていません。" %}</p>
             {% endif %}
 
             <hr>
-            <h4 class="text-secondary mb-3">この構成に関連する評価ログ</h4>
+            <h4 class="text-secondary mb-3">{% trans "この構成に関連する評価ログ" %}</h4>
             {% if config.evaluations.all %}
                 <ul class="list-group mb-4">
                     {% for eval_log in config.evaluations.all %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <span>
                                 <a href="{% url 'rag_app:rag_evaluation_detail' eval_log.pk %}">
-                                    評価日時: {{ eval_log.evaluation_date|date:"Y/m/d H:i" }} - 質問: {{ eval_log.question|truncatechars:50 }}
+                                    {% trans "評価日時" %}: {{ eval_log.evaluation_date|date:"Y/m/d H:i" }} - {% trans "質問" %}: {{ eval_log.question|truncatechars:50 }}
                                 </a>
                             </span>
                             <span class="badge bg-secondary">{{ eval_log.evaluator.username }}</span>
@@ -69,17 +70,17 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p class="text-muted">このRAG構成に関連する評価ログはまだありません。</p>
+                <p class="text-muted">{% trans "このAIエージェント構成に関連する評価ログはまだありません。" %}</p>
             {% endif %}
 
-            <p class="text-muted small mt-4 mb-1">作成日時: {{ config.created_at|date:"Y年m月d日 H:i" }}</p>
-            <p class="text-muted small">最終更新日時: {{ config.updated_at|date:"Y年m月d日 H:i" }}</p>
+            <p class="text-muted small mt-4 mb-1">{% trans "作成日時" %}: {{ config.created_at|date:"Y年m月d日 H:i" }}</p>
+            <p class="text-muted small">{% trans "最終更新日時" %}: {{ config.updated_at|date:"Y年m月d日 H:i" }}</p>
 
             <div class="mt-4">
-                <a href="{% url 'rag_config_log:rag_config_list' %}" class="btn btn-secondary me-2">一覧に戻る</a>
+                <a href="{% url 'rag_config_log:rag_config_list' %}" class="btn btn-secondary me-2">{% trans "一覧に戻る" %}</a>
                 {% if config.user == request.user %}
-                    <a href="{% url 'rag_config_log:rag_config_update' config.pk %}" class="btn btn-warning me-2">編集</a>
-                    <a href="{% url 'rag_config_log:rag_config_delete' config.pk %}" class="btn btn-danger">削除</a>
+                    <a href="{% url 'rag_config_log:rag_config_update' config.pk %}" class="btn btn-warning me-2">{% trans "編集" %}</a>
+                    <a href="{% url 'rag_config_log:rag_config_delete' config.pk %}" class="btn btn-danger">{% trans "削除" %}</a>
                 {% endif %}
             </div>
         </div>

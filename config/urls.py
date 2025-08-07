@@ -4,7 +4,9 @@ from django.urls import path, include
 from django.views.generic.base import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-# from . import views as config_views # <-- この行を削除
+from django.conf.urls.i18n import set_language # 多言語対応
+from django.urls import reverse_lazy
+
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/memos/', permanent=True), name='home'), 
@@ -17,6 +19,9 @@ urlpatterns = [
     path('rag_evaluations/', include('rag_app.urls')),
     path('rag_configs/', include('rag_config_log.urls')),
     path('rag_evaluator/', include('rag_evaluator_tool.urls')),
+
+    # 言語切り替えのためのURL
+    path('i18n/setlang/', set_language, name='set_language'),
 ]
 
 if settings.DEBUG:

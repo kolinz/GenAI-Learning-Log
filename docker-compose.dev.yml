@@ -2,10 +2,8 @@
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    build: .
+    command: /app/entrypoint.sh
     volumes:
       - .:/app
     ports:
@@ -14,7 +12,7 @@ services:
       - .env.dev
     depends_on:
       - db
-
+  
   db:
     image: postgres:15-alpine
     volumes:
@@ -22,6 +20,11 @@ services:
     env_file:
       - .env.dev
     restart: unless-stopped
+    healthcheck: # <-- dbコンテナのヘルスチェックを定義
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

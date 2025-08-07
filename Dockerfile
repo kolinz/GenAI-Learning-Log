@@ -3,11 +3,11 @@
 # Pythonの公式イメージをベースとして使用
 FROM python:3.12-slim
 
-# アップデートとnetcatのインストール
-RUN apt-get update && apt-get install -y netcat-openbsd && rm -rf /var/lib/apt/lists/*
-
-# 環境変数を設定（環境変数は.envファイルで設定されるため、ここではデフォルト値や説明を記載）
+# 環境変数を設定
 ENV PYTHONUNBUFFERED=1
+
+# アップデートとnetcatのインストール
+RUN apt-get update && apt-get install -y gettext netcat-openbsd && rm -rf /var/lib/apt/lists/*
 
 # 作業ディレクトリをコンテナ内に設定
 WORKDIR /app

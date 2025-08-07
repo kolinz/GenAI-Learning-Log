@@ -1,115 +1,113 @@
 {% extends 'base.html' %}
-    {% load markdown_extras %}
-    {% load filename_extras %}
+{% load markdown_extras %}
+{% load filename_extras %}
+{% load i18n %}
 
-    {% block title %}RAG評価ログ詳細 - {{ evaluation.question|truncatechars:20 }}{% endblock %}
+{% block title %}{% trans "RAG評価ログ詳細" %} - {{ evaluation.question|truncatechars:20 }}{% endblock %}
 
-    {% block content %}
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <h2 class="card-title text-primary">RAG評価ログ ({{ evaluation.evaluation_date|date:"Y年m月d日 H:i" }})</h2>
-                <h6 class="card-subtitle mb-3 text-muted">評価者: {{ evaluation.evaluator.username|default:"N/A" }}</h6>
+{% block content %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title text-primary">{% trans "RAG評価ログ" %} ({{ evaluation.evaluation_date|date:"Y年m月d日 H:i" }})</h2>
+            <h6 class="card-subtitle mb-3 text-muted">{% trans "評価者" %}: {{ evaluation.evaluator.username|default:"N/A" }}</h6>
 
-                <hr>
-                <h4 class="text-secondary mb-3">関連RAG構成: <a href="{% url 'rag_config_log:rag_config_detail' evaluation.rag_config.pk %}" class="text-decoration-none">{{ evaluation.rag_config.config_name }}</a></h4>
-                <p><strong>LLM:</strong> {{ evaluation.rag_config.rag_model_name }} {% if evaluation.rag_config.rag_model_version %}(v{{ evaluation.rag_config.rag_model_version }}){% endif %}</p>
-                <p><strong>Embeddingモデル:</strong> {{ evaluation.rag_config.embedding_model_name }} {% if evaluation.rag_config.embedding_model_version %}(v{{ evaluation.rag_config.embedding_model_version }}){% endif %}</p>
-                <p><strong>RAGツール:</strong> {{ evaluation.rag_config.rag_tool_name|default:"-" }} {% if evaluation.rag_config.rag_tool_version %}(v{{ evaluation.rag_config.rag_tool_version }}){% endif %}</p>
-                <p><strong>RAGの種類:</strong> {{ evaluation.rag_config.get_rag_type_display }}</p>
+            <hr>
+            <h4 class="text-secondary mb-3">{% trans "関連RAG構成" %}: <a href="{% url 'rag_config_log:rag_config_detail' evaluation.rag_config.pk %}" class="text-decoration-none">{{ evaluation.rag_config.config_name }}</a></h4>
+            <p><strong>{% trans "LLM" %}:</strong> {{ evaluation.rag_config.rag_model_name }} {% if evaluation.rag_config.rag_model_version %}(v{{ evaluation.rag_config.rag_model_version }}){% endif %}</p>
+            <p><strong>{% trans "Embeddingモデル" %}:</strong> {{ evaluation.rag_config.embedding_model_name }} {% if evaluation.rag_config.embedding_model_version %}(v{{ evaluation.rag_config.embedding_model_version }}){% endif %}</p>
+            <p><strong>{% trans "RAGツール" %}:</strong> {{ evaluation.rag_config.rag_tool_name|default:"-" }} {% if evaluation.rag_config.rag_tool_version %}(v{{ evaluation.rag_config.rag_tool_version }}){% endif %}</p>
+            <p><strong>{% trans "RAGの種類" %}:</strong> {{ evaluation.rag_config.get_rag_type_display }}</p>
 
-                {% if evaluation.rag_config.rag_workflow_tool %}
-                    <p><strong>ワークフロー作成ツール:</strong> {{ evaluation.rag_config.rag_workflow_tool }}</p>
-                {% endif %}
-                {% if evaluation.rag_config.rag_workflow_file %}
-                    <p><strong>ワークフローファイル:</strong>
-                        <a href="{{ evaluation.rag_config.rag_workflow_file.url }}" target="_blank" class="text-decoration-none">
-                            <i class="bi bi-file-earmark"></i> {{ evaluation.rag_config.rag_workflow_file.name|filename }}
-                        </a>
-                    </p>
-                {% endif %}
+            {% if evaluation.rag_config.rag_workflow_file %}
+                <p><strong>{% trans "ワークフローファイル" %}:</strong>
+                    <a href="{{ evaluation.rag_config.rag_workflow_file.url }}" target="_blank" class="text-decoration-none">
+                        <i class="bi bi-file-earmark"></i> {{ evaluation.rag_config.rag_workflow_file.name|filename }}
+                    </a>
+                </p>
+            {% endif %}
 
-                <hr>
-                <h4 class="text-secondary mb-3">RAGAS評価パラメータ</h4>
-                <div class="mb-4">
-                    <h5>質問文:</h5>
-                    <div class="border rounded p-3 bg-light markdown-content">
-                        {{ evaluation.question|markdownify|safe }}
-                    </div>
-                </div>
-
-                {% if evaluation.related_memos_as_context.all %}
-                    <div class="mb-4">
-                        <h5>RAGに用いた学習メモ (コンテキスト):</h5>
-                        <ul class="list-group">
-                            {% for memo in evaluation.related_memos_as_context.all %}
-                                <li class="list-group-item">
-                                    <a href="{% url 'memo_app:memo_detail' memo.pk %}">
-                                        {{ memo.subject }} ({{ memo.year }}) - {{ memo.input_text|truncatechars:50 }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
-
-                {% if evaluation.ground_truth %}
-                    <div class="mb-4">
-                        <h5>質問に対する想定回答文 (Ground Truth):</h5>
-                        <div class="border rounded p-3 bg-light markdown-content">
-                            {{ evaluation.ground_truth|markdownify|safe }}
-                        </div>
-                    </div>
-                {% endif %}
-
-                <div class="mb-4">
-                    <h5>実際の回答文 (Actual Answer):</h5>
-                    <div class="border rounded p-3 bg-light markdown-content">
-                        {{ evaluation.actual_answer|markdownify|safe }}
-                    </div>
-                </div>
-
-                <hr>
-                <h4 class="text-secondary mb-3">RAGAS評価結果</h4>
-                <div class="table-responsive mb-4">
-                    <table class="table table-bordered table-sm text-center">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Faithfulness</th>
-                                <th>Answer Relevancy</th>
-                                <th>Context Precision</th>
-                                <th>Context Recall</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="badge bg-primary">{{ evaluation.faithfulness_display }}</span></td>
-                                <td><span class="badge bg-success">{{ evaluation.answer_relevancy_display }}</span></td>
-                                <td><span class="badge bg-info text-dark">{{ evaluation.context_precision_display }}</span></td>
-                                <td><span class="badge bg-warning text-dark">{{ evaluation.context_recall_display }}</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                {% if evaluation.notes %}
-                    <div class="mb-4 mt-4">
-                        <h5 class="text-secondary">備考:</h5>
-                        <div class="border rounded p-3 bg-light markdown-content">
-                            {{ evaluation.notes|markdownify|safe }}
-                        </div>
-                    </div>
-                {% endif %}
-
-                <p class="text-muted small mt-4 mb-1">ログ作成日時: {{ evaluation.created_at|date:"Y年m月d日 H:i" }}</p>
-                <p class="text-muted small">最終更新日時: {{ evaluation.updated_at|date:"Y年m月d日 H:i" }}</p>
-
-                <div class="mt-4">
-                    <a href="{% url 'rag_app:rag_evaluation_list' %}" class="btn btn-secondary me-2">一覧に戻る</a>
-                    {% if evaluation.evaluator == request.user or request.user.is_superuser %}
-                        <a href="{% url 'rag_app:rag_evaluation_update' evaluation.pk %}" class="btn btn-warning me-2">編集</a>
-                        <a href="{% url 'rag_app:rag_evaluation_delete' evaluation.pk %}" class="btn btn-danger">削除</a>
-                    {% endif %}
+            <hr>
+            <h4 class="text-secondary mb-3">{% trans "RAGAS評価パラメータ" %}</h4>
+            <div class="mb-4">
+                <h5>{% trans "質問文" %}:</h5>
+                <div class="border rounded p-3 bg-light markdown-content">
+                    {{ evaluation.question|markdownify|safe }}
                 </div>
             </div>
+
+            {% if evaluation.related_memos_as_context.all %}
+                <div class="mb-4">
+                    <h5>{% trans "RAGに用いた学習メモ (コンテキスト)" %}:</h5>
+                    <ul class="list-group">
+                        {% for memo in evaluation.related_memos_as_context.all %}
+                            <li class="list-group-item">
+                                <a href="{% url 'memo_app:memo_detail' memo.pk %}">
+                                    {{ memo.subject }} ({{ memo.year }}) - {{ memo.input_text|truncatechars:50 }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if evaluation.ground_truth %}
+                <div class="mb-4">
+                    <h5>{% trans "質問に対する想定回答文 (Ground Truth)" %}:</h5>
+                    <div class="border rounded p-3 bg-light markdown-content">
+                        {{ evaluation.ground_truth|markdownify|safe }}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="mb-4">
+                <h5>{% trans "実際の回答文 (Actual Answer)" %}:</h5>
+                <div class="border rounded p-3 bg-light markdown-content">
+                    {{ evaluation.actual_answer|markdownify|safe }}
+                </div>
+            </div>
+
+            <hr>
+            <h4 class="text-secondary mb-3">{% trans "RAGAS評価結果" %}</h4>
+            <div class="table-responsive mb-4">
+                <table class="table table-bordered table-sm text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>{% trans "Faithfulness" %}</th>
+                            <th>{% trans "Answer Relevancy" %}</th>
+                            <th>{% trans "Context Precision" %}</th>
+                            <th>{% trans "Context Recall" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge bg-primary">{{ evaluation.faithfulness_display }}</span></td>
+                            <td><span class="badge bg-success">{{ evaluation.answer_relevancy_display }}</span></td>
+                            <td><span class="badge bg-info text-dark">{{ evaluation.context_precision_display }}</span></td>
+                            <td><span class="badge bg-warning text-dark">{{ evaluation.context_recall_display }}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {% if evaluation.notes %}
+                <div class="mb-4 mt-4">
+                    <h5 class="text-secondary">{% trans "備考" %}:</h5>
+                    <div class="border rounded p-3 bg-light markdown-content">
+                        {{ evaluation.notes|markdownify|safe }}
+                    </div>
+                </div>
+            {% endif %}
+
+            <p class="text-muted small mt-4 mb-1">{% trans "ログ作成日時" %}: {{ evaluation.created_at|date:"Y年m月d日 H:i" }}</p>
+            <p class="text-muted small">{% trans "最終更新日時" %}: {{ evaluation.updated_at|date:"Y年m月d日 H:i" }}</p>
+
+            <div class="mt-4">
+                <a href="{% url 'rag_app:rag_evaluation_list' %}" class="btn btn-secondary me-2">{% trans "一覧に戻る" %}</a>
+                {% if evaluation.evaluator == request.user or request.user.is_superuser %}
+                    <a href="{% url 'rag_app:rag_evaluation_update' evaluation.pk %}" class="btn btn-warning me-2">{% trans "編集" %}</a>
+                    <a href="{% url 'rag_app:rag_evaluation_delete' evaluation.pk %}" class="btn btn-danger">{% trans "削除" %}</a>
+                {% endif %}
+            </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}

@@ -40,16 +40,16 @@ class RAGConfigurationForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}),
         }
         labels = {
-            'config_name': 'RAG構成名',
-            'rag_model_name': 'RAGに使ったLLM',
-            'rag_model_version': 'RAGに使ったLLMバージョン',
-            'embedding_model_name': 'RAGに使ったEmbeddingモデル',
+            'config_name': 'AIエージェント構成名',
+            'rag_model_name': 'LLM名',
+            'rag_model_version': 'LLMバージョン',
+            'embedding_model_name': 'Embeddingモデル',
             'embedding_model_version': 'Embeddingモデルバージョン',
-            'rag_tool_name': 'RAGツール名 (例: LlamaIndex, LangChain, Difyなど)',
-            'rag_tool_version': 'RAGツールバージョン',
+            'rag_tool_name': 'ツール名 (例: DifyやLangflowなど)',
+            'rag_tool_version': 'ツールバージョン',
             'rag_type': 'RAGの種類',
             'rag_workflow_file': 'ワークフローファイル',
-            'description': 'RAG構成の詳細説明',
+            'description': 'AIエージェント構成の詳細説明',
             'used_memos': '使用した学習メモ',
         }
     

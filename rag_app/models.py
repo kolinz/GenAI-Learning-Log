@@ -12,10 +12,10 @@ class RAGEvaluation(models.Model):
     evaluation_date = models.DateTimeField(default=timezone.now, verbose_name="評価日時")
     evaluator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="評価者")
 
-    rag_config = models.ForeignKey(RAGConfiguration, on_delete=models.CASCADE, verbose_name="RAG構成", related_name='evaluations')
+    rag_config = models.ForeignKey(RAGConfiguration, on_delete=models.CASCADE, verbose_name="AIエージェント構成", related_name='evaluations')
 
     question = models.TextField(verbose_name="質問文 (RAGAS: question)")
-    related_memos_as_context = models.ManyToManyField(LearningMemo, blank=True, verbose_name="RAGに用いた学習メモ (RAGAS: context)")
+    related_memos_as_context = models.ManyToManyField(LearningMemo, blank=True, verbose_name="RAG（AIエージェント）に用いた学習メモ (RAGAS: context)")
     ground_truth = models.TextField(blank=True, null=True, verbose_name="質問に対する想定回答文 (RAGAS: ground_truth)")
     actual_answer = models.TextField(verbose_name="実際の回答文 (RAGAS: answer)")
 

@@ -13,19 +13,20 @@ RAG_TYPE_CHOICES = [
     ('Fusion', 'Fusion RAG (e.g., RRF)'),
     ('Agentic', 'Agentic RAG'),
     ('Other', 'その他'),
+    ('none', 'RAG未使用'),
 ]
 
 class RAGConfiguration(models.Model):
     """
-    RAGシステムの構成情報（ビルドログ）を記録するモデル
+    RAG（AIエージェント）システムの構成情報（ビルドログ）を記録するモデル
     """
-    config_name = models.CharField(max_length=200, unique=True, verbose_name="RAG構成名 (ユニークな識別子)")
-    rag_model_name = models.CharField(max_length=200, verbose_name="RAGに使ったLLM")
-    rag_model_version = models.CharField(max_length=100, blank=True, null=True, verbose_name="RAGに使ったLLMバージョン")
-    embedding_model_name = models.CharField(max_length=200, verbose_name="RAGに使ったEmbeddingモデル")
+    config_name = models.CharField(max_length=200, unique=True, verbose_name="AIエージェント構成名 (ユニークな識別子)")
+    rag_model_name = models.CharField(max_length=200, verbose_name="LLM名")
+    rag_model_version = models.CharField(max_length=100, blank=True, null=True, verbose_name="LLMバージョン")
+    embedding_model_name = models.CharField(max_length=200, verbose_name="Embeddingモデル")
     embedding_model_version = models.CharField(max_length=100, blank=True, null=True, verbose_name="Embeddingモデルバージョン")
-    rag_tool_name = models.CharField(max_length=200, blank=True, null=True, verbose_name="RAGツール名 (例: Dify, Langflow)")
-    rag_tool_version = models.CharField(max_length=100, blank=True, null=True, verbose_name="RAGツールバージョン")
+    rag_tool_name = models.CharField(max_length=200, blank=True, null=True, verbose_name="ツール名 (例: Dify, Langflow)")
+    rag_tool_version = models.CharField(max_length=100, blank=True, null=True, verbose_name="ツールバージョン")
     rag_type = models.CharField(
         max_length=50,
         choices=RAG_TYPE_CHOICES,
@@ -43,13 +44,13 @@ class RAGConfiguration(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作成者")
-    description = models.TextField(blank=True, null=True, verbose_name="RAG構成の詳細説明")
+    description = models.TextField(blank=True, null=True, verbose_name="AIエージェント構成の詳細説明")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="最終更新日時")
 
     class Meta:
-        verbose_name = "RAG構成ログ"
-        verbose_name_plural = "RAG構成ログ"
+        verbose_name = "AIエージェント構成ログ"
+        verbose_name_plural = "AIエージェント構成ログ"
         ordering = ['-created_at']
 
     def __str__(self):

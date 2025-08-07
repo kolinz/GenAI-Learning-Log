@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}RAG構成を削除{% endblock %}
+{% block title %}{% trans "AIエージェント構成を削除" %}{% endblock %}
 
 {% block content %}
     <div class="alert alert-danger" role="alert">
-        <h4 class="alert-heading">本当にこのRAG構成ログを削除しますか？</h4>
-        <p>以下のRAG構成ログが完全に削除されます。この操作は元に戻せません。</p>
+        <h4 class="alert-heading">{% trans "本当にこのAIエージェント構成を削除しますか？" %}</h4>
+        <p>{% trans "以下のAIエージェント構成ログが完全に削除されます。この操作は元に戻せません。" %}</p>
         <ul>
-            <li><strong>RAG構成名:</strong> {{ config.config_name }}</li>
-            <li><strong>LLM:</strong> {{ config.rag_model_name }}</li>
-            <li><strong>種類:</strong> {{ config.get_rag_type_display }}</li>
+            <li><strong>{% trans "AIエージェント構成名" %}:</strong> {{ config.config_name }}</li>
+            <li><strong>{% trans "LLM" %}:</strong> {{ config.rag_model_name }}</li>
+            <li><strong>{% trans "種類" %}:</strong> {{ config.get_rag_type_display }}</li>
         </ul>
         <hr>
-        <p class="mb-0">このログに関連する評価ログもすべて削除されます。</p>
+        <p class="mb-0">{% trans "このログに関連する評価ログもすべて削除されます。" %}</p>
     </div>
 
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger me-2">削除する</button>
-        <a href="{% url 'rag_config_log:rag_config_detail' config.pk %}" class="btn btn-secondary">キャンセル</a>
+        <button type="submit" class="btn btn-danger me-2">{% trans "削除する" %}</button>
+        <a href="{% url 'rag_config_log:rag_config_detail' config.pk %}" class="btn btn-secondary">{% trans "キャンセル" %}</a>
     </form>
 {% endblock %}

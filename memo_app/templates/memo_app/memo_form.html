@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load filename_extras %}
+{% load i18n %}
 
-{% block title %}{% if form.instance.pk %}メモを編集{% else %}新しいメモを作成{% endif %}{% endblock %}
+{% block title %}{% if form.instance.pk %}{% trans "メモを編集" %}{% else %}{% trans "新しいメモを作成" %}{% endif %}{% endblock %}
 
 {% block content %}
-    <h1>{% if form.instance.pk %}メモを編集{% else %}新しいメモを作成{% endif %}</h1>
+    <h1>{% if form.instance.pk %}{% trans "メモを編集" %}{% else %}{% trans "新しいメモを作成" %}{% endif %}</h1>
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -33,20 +34,19 @@
             </div>
         {% endfor %}
 
-        {# --- ここから添付ファイルフォームセット --- #}
-        <h4 class="mt-4 mb-3">添付ファイル</h4>
+        <h4 class="mt-4 mb-3">{% trans "添付ファイル" %}</h4>
         {{ attachment_formset.management_form }}
         <div id="attachment-formset-container">
             {% for attachment_form in attachment_formset %}
                 <div class="card mb-2 p-3 bg-light attachment-form-row">
                     <div class="d-flex justify-content-end">
                         {% if attachment_form.instance.pk %}
-                            <p class="text-muted mb-0 me-3">既存ファイル: <a href="{{ attachment_form.instance.file.url }}" target="_blank">{{ attachment_form.instance.file.name|filename }}</a></p>
+                            <p class="text-muted mb-0 me-3">{% trans "既存ファイル" %}: <a href="{{ attachment_form.instance.file.url }}" target="_blank">{{ attachment_form.instance.file.name|filename }}</a></p>
                         {% endif %}
                         {% if attachment_form.DELETE %}
                             <div class="form-check">
                                 {{ attachment_form.DELETE }}
-                                <label class="form-check-label" for="{{ attachment_form.DELETE.id_for_label }}">削除</label>
+                                <label class="form-check-label" for="{{ attachment_form.DELETE.id_for_label }}">{% trans "削除" %}</label>
                             </div>
                         {% endif %}
                     </div>
@@ -55,14 +55,14 @@
                     {% endfor %}
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="{{ attachment_form.file.id_for_label }}" class="form-label">ファイル</label>
+                            <label for="{{ attachment_form.file.id_for_label }}" class="form-label">{% trans "ファイル" %}</label>
                             {{ attachment_form.file }}
                             {% if attachment_form.file.errors %}
                                 <div class="invalid-feedback d-block">{{ attachment_form.file.errors }}</div>
                             {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="{{ attachment_form.description.id_for_label }}" class="form-label">説明</label>
+                            <label for="{{ attachment_form.description.id_for_label }}" class="form-label">{% trans "説明" %}</label>
                             {{ attachment_form.description }}
                             {% if attachment_form.description.errors %}
                                 <div class="invalid-feedback d-block">{{ attachment_form.description.errors }}</div>
@@ -72,8 +72,7 @@
                 </div>
             {% endfor %}
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="add-attachment-form">ファイルを追加</button>
-        {# --- ここまで添付ファイルフォームセット --- #}
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="add-attachment-form">{% trans "ファイルを追加" %}</button>
 
         {% if form.non_field_errors %}
             <div class="alert alert-danger mt-3">
@@ -90,8 +89,8 @@
             </div>
         {% endif %}
 
-        <button type="submit" class="btn btn-primary mt-4">保存</button>
-        <a href="{% url 'memo_app:memo_list' %}" class="btn btn-secondary mt-4">キャンセル</a>
+        <button type="submit" class="btn btn-primary mt-4">{% trans "保存" %}</button>
+        <a href="{% url 'memo_app:memo_list' %}" class="btn btn-secondary mt-4">{% trans "キャンセル" %}</a>
     </form>
 
     <script>
@@ -108,18 +107,18 @@
                         <div class="d-flex justify-content-end">
                             <div class="form-check">
                                 <input type="checkbox" name="attachments-${formIdx}-DELETE" id="id_attachments-${formIdx}-DELETE" class="form-check-input">
-                                <label class="form-check-label" for="id_attachments-${formIdx}-DELETE">削除</label>
+                                <label class="form-check-label" for="id_attachments-${formIdx}-DELETE">{% trans "削除" %}</label>
                             </div>
                         </div>
                         <input type="hidden" name="attachments-${formIdx}-id" id="id_attachments-${formIdx}-id">
                         <input type="hidden" name="attachments-${formIdx}-memo" id="id_attachments-${formIdx}-memo">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="id_attachments-${formIdx}-file" class="form-label">ファイル</label>
+                                <label for="id_attachments-${formIdx}-file" class="form-label">{% trans "ファイル" %}</label>
                                 <input type="file" name="attachments-${formIdx}-file" id="id_attachments-${formIdx}-file" class="form-control">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="id_attachments-${formIdx}-description" class="form-label">説明</label>
+                                <label for="id_attachments-${formIdx}-description" class="form-label">{% trans "説明" %}</label>
                                 <input type="text" name="attachments-${formIdx}-description" id="id_attachments-${formIdx}-description" class="form-control">
                             </div>
                         </div>
