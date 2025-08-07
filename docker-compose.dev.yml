@@ -20,7 +20,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - .env.dev # <-- dbも同じ開発用envファイルを参照
+      - .env.dev
     restart: unless-stopped
 
 volumes:
