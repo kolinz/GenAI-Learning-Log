@@ -59,19 +59,22 @@ docker compose -f docker-compose.dev.yml up --build
 ## 本番環境での運用方法
 この手順では、Nginxをリバースプロキシとして使用し、GunicornでDjangoアプリケーションを動かします。
 
-1. 環境設定ファイル (.env.prod) の準備
+1. 動作確認
+開発環境を起動し、動作確認をします。
+  
+3. 環境設定ファイル (.env.prod) の準備
 本番環境用の環境設定ファイルを作成します。SECRET_KEY は必ず強固なものに変更してください。
 ```
 cp .env.prod.example .env.prod
 ```
 
-2. 静的ファイルの収集
+3. 静的ファイルの収集
 Nginxが配信する静的ファイルを収集します。
 ```
 docker-compose -f docker-compose.prod.yml run --rm web python manage.py collectstatic --no-input
 ```
 
-3. コンテナの起動
+4. コンテナの起動
 以下のコマンドで、Nginx、Django、PostgreSQLの各コンテナをバックグラウンドで起動します。
 ```
 docker-compose -f docker-compose.prod.yml up --build -d
