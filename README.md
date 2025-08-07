@@ -1,8 +1,8 @@
 # GenAI Learning Log
 GenAI Learning Logへようこそ！このプロジェクトは、Django 5.2 を使用して、生涯学習講座や大学などでの学習メモの記録と、学習メモをもとにRAGで学習アシスタントを作ることについての開発記録を目的としたWebアプリケーションです。
-- 学習メモ: 個人の学習記録
-- RAG作成記録: RAGシステムの構成情報、ワークフロー、ファイル添付
-- RAG評価ログ: RAGASの評価結果記録
+- 学習メモ: 個人の学習メモを記録および共有します。
+- AIエージェント構成: RAGを含め、作成したAIエージェントの構成情報を記録します。この情報には、RAGにつかった学習メモの情報が含まれることがあります。AIエージェントの構成情報を共有することに役立ちます。
+- RAG評価ログ: RAGASによる、RAGの評価結果を記録します。
 - RAG評価ツール：今後実装予定
 
 # 開発計画
@@ -14,7 +14,7 @@ GenAI Learning Logへようこそ！このプロジェクトは、Django 5.2 を
 - [ ] 学習メモのCSVエクスポートについて、科目ごとにエクスポートする機能
 - [ ] チェックした学習メモを使って、RAG構成ログを新規作成する機能
 
-# セットアップ（修正中です）
+# セットアップ
 このアプリケーションは、Docker Compose を使って簡単に開発・運用できます。
 
 ## 依存関係のインストール
@@ -39,18 +39,18 @@ cp .env.dev.example .env.dev
 ```
 SECRET_KEY やデータベース情報など、必要に応じて .env.dev ファイルの内容を編集してください。
 
-2. コンテナの起動
-以下のコマンドを実行して、コンテナをビルドし、起動します。
+2. entrypoint.sh に実行権限を付与
+コンテナ内でスクリプトが実行できるように、権限を付与します。
 ```
-docker-compose -f docker-compose.dev.yml up --build
+cd app
+chmod +x entrypoint.sh
+cd ..
 ```
 
-3. データベースのセットアップ
-別のターミナルを開き、以下のコマンドでデータベースのマイグレーションと、スーパーユーザーの作成を行います。
+3. コンテナの起動
+以下のコマンドを実行して、コンテナをビルドし、起動します。
 ```
-docker-compose exec web python manage.py makemigrations memo_app rag_app rag_config_log rag_evaluator_tool
-docker-compose exec web python manage.py migrate
-docker-compose exec web python manage.py createsuperuser
+docker compose -f docker-compose.dev.yml up --build
 ```
 
 4. アプリケーションへのアクセス
