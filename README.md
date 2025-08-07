@@ -60,25 +60,40 @@ docker compose -f docker-compose.dev.yml up --build
 この手順では、Nginxをリバースプロキシとして使用し、GunicornでDjangoアプリケーションを動かします。
 
 1. 動作確認
-開発環境を起動し、動作確認をします。
+本番環境で動かす前に、開発環境で十分なテストを行ってください。
   
-3. 環境設定ファイル (.env.prod) の準備
+2. 環境変数ファイル (.env.prod) の準備
 本番環境用の環境設定ファイルを作成します。SECRET_KEY は必ず強固なものに変更してください。
 ```
 cp .env.prod.example .env.prod
 ```
+.env.prod ファイルには、本番用の SECRET_KEY や DEBUG=False、そして許可するホスト名 (ALLOWED_HOSTS) を記述します。
+また、次の環境変数を適切な値に設定してください。
+
+- DJANGO_SUPERUSER_USERNAME
+- DJANGO_SUPERUSER_EMAIL
+- DJANGO_SUPERUSER_PASSWORD
+- POSTGRES_DB=genai_learning_db
+- POSTGRES_USER=genai_user
+- POSTGRES_PASSWORD=genai_password
 
 3. 静的ファイルの収集
 Nginxが配信する静的ファイルを収集します。
 ```
-docker-compose -f docker-compose.prod.yml run --rm web python manage.py collectstatic --no-input
+docker compose -f docker-compose.prod.yml run --rm web python manage.py collectstatic --no-input
 ```
 
 4. コンテナの起動
-以下のコマンドで、Nginx、Django、PostgreSQLの各コンテナをバックグラウンドで起動します。
+以下のコマンドを実行して、Nginx、Django、PostgreSQLの各コンテナをバックグラウンドで起動します。
 ```
-docker-compose -f docker-compose.prod.yml up --build -d
+docker compose -f docker-compose.prod.yml up --build -d
 ```
 
-4. アプリケーションへのアクセス
+5. アプリケーションへのアクセス
 ブラウザで http://localhost/ にアクセスすると、アプリケーションを利用できます。
+
+6. コンテナの停止と削除
+運用を停止する場合は、以下のコマンドでコンテナを停止します。すべてのデータを完全に削除する場合は -v オプションを追加します。
+```
+docker compose -f docker-compose.prod.yml down -v
+```

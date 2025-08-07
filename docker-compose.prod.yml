@@ -16,8 +16,7 @@ services:
 
   web:
     build: .
-    command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application
-    restart: always
+    command: /app/entrypoint.prod.sh
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
