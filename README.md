@@ -82,22 +82,28 @@ cp .env.prod.example .env.prod
 - POSTGRES_USER=genai_user
 - POSTGRES_PASSWORD=genai_password
 
-3. 静的ファイルの収集
+3. entrypoint.prod.sh に実行権限を付与
+コンテナ内でスクリプトが実行できるように、権限を付与します。
+```
+chmod +x entrypoint.prod.sh
+```
+
+4. 静的ファイルの収集
 Nginxが配信する静的ファイルを収集します。
 ```
 docker compose -f docker-compose.prod.yml run --rm web python manage.py collectstatic --no-input
 ```
 
-4. コンテナの起動
+5. コンテナの起動
 以下のコマンドを実行して、Nginx、Django、PostgreSQLの各コンテナをバックグラウンドで起動します。
 ```
 docker compose -f docker-compose.prod.yml up --build -d
 ```
 
-5. アプリケーションへのアクセス
+6. アプリケーションへのアクセス
 ブラウザで http://localhost/ にアクセスすると、アプリケーションを利用できます。
 
-6. コンテナの停止と削除
+7. コンテナの停止と削除
 運用を停止する場合は、以下のコマンドでコンテナを停止します。すべてのデータを完全に削除する場合は -v オプションを追加します。
 ```
 docker compose -f docker-compose.prod.yml down -v
