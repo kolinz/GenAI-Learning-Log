@@ -11,6 +11,7 @@
             <li><strong>{% trans "科目" %}:</strong> {{ memo.subject }}</li>
             <li><strong>{% trans "年度" %}:</strong> {{ memo.year }}</li>
             <li><strong>{% trans "授業日" %}:</strong> {{ memo.lesson_date|date:"Y年m月d日" }}</li>
+            <li><strong>{% trans "単元" %}:</strong> {{ memo.unit }}</li>
             <li><strong>{% trans "作成者" %}:</strong> {{ memo.user.username }}</li>
         </ul>
         <hr>

@@ -35,6 +35,7 @@ class LearningMemo(models.Model):
     instruction_text = models.TextField(verbose_name="想定される質問例", blank=True, null=True)
     output_text = models.TextField(verbose_name="質問への回答例", blank=True, null=True)
     subject = models.CharField(max_length=100, verbose_name="科目名")
+    unit = models.CharField(max_length=100, blank=True, null=True, verbose_name="単元")
     year = models.IntegerField(verbose_name="年度")
     lesson_date = models.DateField(default=timezone.now, verbose_name="授業日")
     tags = models.ManyToManyField(Tag, blank=True, verbose_name="タグ")

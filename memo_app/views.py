@@ -143,14 +143,14 @@ tagged_memo_list = TaggedMemoListView.as_view()
 
 class LearningMemoExportCSVView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
+        # GETリクエストの場合の処理 (record_typeフィルタリング)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="learning_memos.csv"'
-
+        
         writer = csv.writer(response)
-
-        # ヘッダー行の修正
+        
         writer.writerow([
-            'ID', '作成者', '記録の種別', '記録内容', '科目名', '年度', '授業日', '想定される質問例',
+            'ID', '作成者', '記録の種別', '記録内容', '科目名', '年度', '単元', '授業日', '想定される質問例',
             '質問への回答例', 'タグ', '作成日時', '更新日時'
         ])
 
@@ -161,19 +161,41 @@ class LearningMemoExportCSVView(LoginRequiredMixin, View):
 
         for memo in memos:
             tags = ", ".join([tag.name for tag in memo.tags.all()])
-
-            # 出力データの修正
             writer.writerow([
-                memo.id,
-                memo.user.username,
-                memo.get_record_type_display(),
-                memo.input_text,
-                memo.subject,
-                memo.year,
-                memo.lesson_date.strftime('%Y-%m-%d'),
-                memo.instruction_text,
-                memo.output_text,
-                tags,
+                memo.id, memo.user.username, memo.get_record_type_display(), memo.input_text,
+                memo.subject, memo.year, memo.unit, memo.lesson_date.strftime('%Y-%m-%d'),
+                memo.instruction_text, memo.output_text, tags,
+                memo.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                memo.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+            ])
+        return response
+
+    def post(self, request, *args, **kwargs):
+        # POSTリクエストの場合の処理 (選択されたメモのIDでフィルタリング)
+        selected_memos_ids = request.POST.getlist('selected_memos')
+        if not selected_memos_ids:
+            # メモが選択されていない場合は、メモ一覧に戻るか、エラーメッセージを表示
+            return redirect('memo_app:memo_list')
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="selected_memos.csv"'
+
+        writer = csv.writer(response)
+        
+        writer.writerow([
+            'ID', '作成者', '記録の種別', '記録内容', '科目名', '年度', '単元', '授業日', '想定される質問例',
+            '質問への回答例', 'タグ', '作成日時', '更新日時'
+        ])
+
+        # 選択されたIDに基づいてメモを取得
+        memos = LearningMemo.objects.filter(user=request.user, id__in=selected_memos_ids).order_by('created_at')
+
+        for memo in memos:
+            tags = ", ".join([tag.name for tag in memo.tags.all()])
+            writer.writerow([
+                memo.id, memo.user.username, memo.get_record_type_display(), memo.input_text,
+                memo.subject, memo.year, memo.unit, memo.lesson_date.strftime('%Y-%m-%d'),
+                memo.instruction_text, memo.output_text, tags,
                 memo.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                 memo.updated_at.strftime('%Y-%m-%d %H:%M:%S')
             ])

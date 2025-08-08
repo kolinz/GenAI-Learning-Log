@@ -11,6 +11,9 @@
             <h2 class="card-title text-primary">{{ memo.subject }} ({{ memo.year }})</h2>
             <h6 class="card-subtitle mb-3 text-muted">{% trans "作成者" %}: {{ memo.user.username }}</h6>
             <p class="card-text"><strong>{% trans "授業日" %}:</strong> {{ memo.lesson_date|date:"Y年m月d日" }}</p>
+            {% if memo.unit %}
+                <p class="card-text"><strong>{% trans "単元" %}:</strong> {{ memo.unit }}</p>
+            {% endif %}
 
             {% if memo.tags.all %}
                 <div class="mb-3">
