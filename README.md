@@ -59,15 +59,7 @@ cd ..
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-4. マイグレーションとスーパーユーザーの作成
-別のターミナルを開き、以下のコマンドでデータベースのマイグレーションと、スーパーユーザーの作成を行います。
-```
-docker compose exec web python manage.py makemigrations memo_app rag_app rag_config_log rag_evaluator_tool
-docker compose exec web python manage.py migrate
-docker compose exec web python manage.py createsuperuser
-```
-
-5. アプリケーションへのアクセス
+4. アプリケーションへのアクセス
 ブラウザで http://localhost:8000/memos/ にアクセスすると、アプリケーションを利用できます。
 
 ## 本番環境での運用方法
