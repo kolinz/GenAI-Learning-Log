@@ -52,14 +52,40 @@ chmod +x entrypoint.sh
 cd ..
 ```
 
-3. コンテナの起動
+3. Python仮想環境をセットアップします。
+以下のコマンドを実行します。
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+4. 依存関係をインストールします。
+以下のコマンドを実行します。
+```
+pip install -r requirements.txt
+```
+
+5. コンテナの起動
 以下のコマンドを実行して、コンテナをビルドし、起動します。
 ```
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-4. アプリケーションへのアクセス
+6. アプリケーションへのアクセス
 ブラウザで http://localhost:8000/memos/ にアクセスすると、アプリケーションを利用できます。
+
+7. コンテナを終了する場合
+以下のコマンドを実行して、コンテナを終了します。
+```
+docker compose -f docker-compose.dev.yml down -v
+```
+実行結果
+```
+✔ Container genai-learning-log-web-1       Removed                                                                0.0s
+✔ Container genai-learning-log-db-1        Removed                                                                0.0s
+✔ Volume genai-learning-log_postgres_data  Removed                                                                0.1s
+✔ Network genai-learning-log_default       Removed  
+```
 
 ## 本番環境での運用方法
 この手順では、Nginxをリバースプロキシとして使用し、GunicornでDjangoアプリケーションを動かします。
