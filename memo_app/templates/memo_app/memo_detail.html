@@ -24,11 +24,18 @@
             <hr>
 
             <div class="mb-4">
-                <h5 class="text-secondary">{% trans "学習したこと（マークダウン）" %}:</h5>
+                <h5 class="text-secondary">{% trans "記録の種別" %}:</h5>
+                <p>{{ memo.get_record_type_display }}</p>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="text-secondary">{% trans "記録内容" %}:</h5>
                 <div class="border rounded p-3 bg-light markdown-content">
                     {{ memo.input_text|markdownify|safe }}
                 </div>
             </div>
+
+            <hr>
 
             {% if memo.instruction_text %}
                 <div class="mb-4">

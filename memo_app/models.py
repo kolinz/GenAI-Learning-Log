@@ -16,10 +16,22 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+# 記録の種類を定義するタプル
+RECORD_TYPE_CHOICES = [
+    ('memo', '学習メモ'),
+    ('conversation', 'AIとの対話記録'),
+]
+
 class LearningMemo(models.Model):
     """学習メモを表現するモデル"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作成者")
-    input_text = models.TextField(verbose_name="学習したこと（マークダウン形式）")
+    record_type = models.CharField(
+        max_length=20,
+        choices=RECORD_TYPE_CHOICES,
+        default='memo',
+        verbose_name="記録の種別"
+    )
+    input_text = models.TextField(verbose_name="記録内容（マークダウン形式）")
     instruction_text = models.TextField(verbose_name="想定される質問例", blank=True, null=True)
     output_text = models.TextField(verbose_name="質問への回答例", blank=True, null=True)
     subject = models.CharField(max_length=100, verbose_name="科目名")

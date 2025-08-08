@@ -1,7 +1,7 @@
 # memo_app/forms.py
 from django import forms
 from django.forms import inlineformset_factory
-from .models import LearningMemo, Tag, MemoAttachment
+from .models import LearningMemo, Tag, MemoAttachment, RECORD_TYPE_CHOICES
 
 class LearningMemoForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
@@ -11,10 +11,17 @@ class LearningMemoForm(forms.ModelForm):
         label="タグ"
     )
 
+    record_type = forms.ChoiceField(
+        choices=RECORD_TYPE_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-select'}),
+        label="記録の種別"
+    )
+
     class Meta:
         model = LearningMemo
-        fields = ['subject', 'year', 'lesson_date', 'input_text', 'instruction_text', 'output_text', 'tags']
+        fields = ['subject', 'year', 'lesson_date', 'input_text', 'record_type' , 'instruction_text', 'output_text', 'tags']
         widgets = {
+            'record_type': forms.Select(attrs={'class': 'form-select'}),
             'input_text': forms.Textarea(attrs={'rows': 10, 'class': 'form-control'}),
             'instruction_text': forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}),
             'output_text': forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}),
@@ -23,7 +30,8 @@ class LearningMemoForm(forms.ModelForm):
             'lesson_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
         }
         labels = {
-            'input_text': '学習したこと（マークダウン形式）',
+            'record_type': '記録の種別',
+            'input_text': '記録内容（マークダウン形式）',
             'instruction_text': '想定される質問例',
             'output_text': '質問への回答例',
             'subject': '科目名',

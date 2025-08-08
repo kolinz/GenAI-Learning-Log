@@ -18,7 +18,16 @@ class MemoListView(LoginRequiredMixin, ListView):
     paginate_by = 9
 
     def get_queryset(self):
-        return LearningMemo.objects.filter(user=self.request.user).order_by('-created_at')
+        queryset = LearningMemo.objects.filter(user=self.request.user).order_by('-created_at')
+        record_type = self.request.GET.get('record_type')
+        if record_type:
+            queryset = queryset.filter(record_type=record_type)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_record_type'] = self.request.GET.get('record_type')
+        return context
 
 memo_list = MemoListView.as_view()
 
@@ -128,8 +137,9 @@ class TaggedMemoListView(LoginRequiredMixin, ListView):
         context['current_tag'] = self.kwargs['tag_name']
         return context
 
-tagged_memo_list = TaggedMemoListView.as_view
+tagged_memo_list = TaggedMemoListView.as_view()
 
+# --- CSVエクスポートビュー ---
 
 class LearningMemoExportCSVView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
@@ -138,23 +148,29 @@ class LearningMemoExportCSVView(LoginRequiredMixin, View):
 
         writer = csv.writer(response)
 
+        # ヘッダー行の修正
         writer.writerow([
-            'ID', '作成者', '科目名', '年度', '授業日', '学習したこと', '想定される質問例',
+            'ID', '作成者', '記録の種別', '記録内容', '科目名', '年度', '授業日', '想定される質問例',
             '質問への回答例', 'タグ', '作成日時', '更新日時'
         ])
 
         memos = LearningMemo.objects.filter(user=request.user).order_by('created_at')
+        record_type = request.GET.get('record_type')
+        if record_type:
+            memos = memos.filter(record_type=record_type)
 
         for memo in memos:
             tags = ", ".join([tag.name for tag in memo.tags.all()])
 
+            # 出力データの修正
             writer.writerow([
                 memo.id,
                 memo.user.username,
+                memo.get_record_type_display(),
+                memo.input_text,
                 memo.subject,
                 memo.year,
                 memo.lesson_date.strftime('%Y-%m-%d'),
-                memo.input_text,
                 memo.instruction_text,
                 memo.output_text,
                 tags,

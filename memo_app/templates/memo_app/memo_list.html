@@ -13,13 +13,15 @@
                 <p class="lead text-muted">
                     {% trans "これまでに学習した内容を記録したメモの一覧です。カードをクリックして詳細を確認したり、新しいメモを作成したりできます。" %}
                 </p>
-                <p>
+                <div class="mt-4">
                     <a href="{% url 'memo_app:memo_create' %}" class="btn btn-primary my-2 me-2">{% trans "新しいメモを作成" %}</a>
-                    <a href="{% url 'memo_app:learning_memo_export_csv' %}" class="btn btn-secondary my-2">{% trans "メモをCSVでエクスポート" %}</a>
-                </p>
-                {% if current_tag %}
-                    <p class="h4">{% trans "現在のタグ" %}: <span class="badge bg-info text-dark">{{ current_tag }}</span></p>
-                {% endif %}
+                    <a href="{% url 'memo_app:learning_memo_export_csv' %}{% if current_record_type %}?record_type={{ current_record_type }}{% endif %}" class="btn btn-secondary my-2">{% trans "メモをCSVでエクスポート" %}</a>
+                </div>
+                <div class="mt-4">
+                    <a href="{% url 'memo_app:memo_list' %}" class="btn btn-outline-dark {% if not current_record_type %}active{% endif %}">{% trans "すべて" %}</a>
+                    <a href="{% url 'memo_app:memo_list' %}?record_type=memo" class="btn btn-outline-primary {% if current_record_type == 'memo' %}active{% endif %}">{% trans "学習メモ" %}</a>
+                    <a href="{% url 'memo_app:memo_list' %}?record_type=conversation" class="btn btn-outline-info {% if current_record_type == 'conversation' %}active{% endif %}">{% trans "AIとの対話記録" %}</a>
+                </div>
             </div>
         </div>
     </section>
@@ -56,40 +58,39 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {% empty %}
-                        <div class="col-12">
-                            <div class="alert alert-info text-center" role="alert">
-                                {% trans "まだメモがありません。新しいメモを作成しましょう！" %}
+                        {% empty %}
+                            <div class="col-12">
+                                <div class="alert alert-info text-center" role="alert">
+                                    {% trans "まだメモがありません。新しいメモを作成しましょう！" %}
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                        {% endfor %}
+                    </div>
 
-                {% if is_paginated %}
-                    <nav aria-label="Page navigation" class="mt-4">
-                        <ul class="pagination justify-content-center">
-                            {% if page_obj.has_previous %}
-                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "前へ" %}</a></li>
-                            {% endif %}
-                            {% for i in paginator.page_range %}
-                                {% if page_obj.number == i %}
-                                    <li class="page-item active"><span class="page-link">{{ i }}</span></li>
-                                {% else %}
-                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% if is_paginated %}
+                        <nav aria-label="Page navigation" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_record_type %}&record_type={{ current_record_type }}{% endif %}">{% trans "前へ" %}</a></li>
                                 {% endif %}
-                            {% endfor %}
-                            {% if page_obj.has_next %}
-                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "次へ" %}</a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
+                                {% for i in paginator.page_range %}
+                                    {% if page_obj.number == i %}
+                                        <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ i }}{% if current_record_type %}&record_type={{ current_record_type }}{% endif %}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_record_type %}&record_type={{ current_record_type }}{% endif %}">{% trans "次へ" %}</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-info text-center" role="alert">
+                        {% trans "まだメモがありません。新しいメモを作成しましょう！" %}
+                    </div>
                 {% endif %}
-            {% else %}
-                <div class="alert alert-info text-center" role="alert">
-                    {% trans "まだメモがありません。新しいメモを作成しましょう！" %}
-                </div>
-            {% endif %}
+            </div>
         </div>
-    </div>
-{% endblock %}
+    {% endblock %}
