@@ -6,6 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import set_language # 多言語対応
 from django.urls import reverse_lazy
+from . import views as config_views
 
 
 urlpatterns = [
@@ -22,6 +23,9 @@ urlpatterns = [
 
     # 言語切り替えのためのURL
     path('i18n/setlang/', set_language, name='set_language'),
+
+    # 検索ビューへのパスを追加
+    path('search/', config_views.search_results_view, name='search_results'),
 ]
 
 if settings.DEBUG:

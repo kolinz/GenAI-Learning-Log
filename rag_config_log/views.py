@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .models import RAGConfiguration
 from .forms import RAGConfigurationForm
+from django.db.models import Q # <-- 検索につかうQオブジェクトをインポート
 
 class RAGConfigurationListView(LoginRequiredMixin, ListView):
     model = RAGConfiguration
@@ -13,7 +14,24 @@ class RAGConfigurationListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return RAGConfiguration.objects.filter(user=self.request.user).order_by('-created_at')
+        queryset = RAGConfiguration.objects.filter(user=self.request.user).order_by('-created_at')
+        query = self.request.GET.get('q') # <-- base.html の検索フォームから送信されたキーワードで、RAG評価ログを横断的に検索
+
+        if query:
+            # 複数のフィールドを横断的に検索
+            queryset = queryset.filter(
+                Q(config_name__icontains=query) |
+                Q(rag_model_name__icontains=query) |
+                Q(rag_tool_name__icontains=query) |
+                Q(description__icontains=query)
+            )
+
+        return queryset
+    
+    def get_context_data(self, **kwargs): # <-- base.html の検索フォームから送信されたキーワードで、RAG評価ログを横断的に検索
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        return context
 
 rag_config_list = RAGConfigurationListView.as_view()
 

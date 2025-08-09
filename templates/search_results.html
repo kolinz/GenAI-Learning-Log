@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "検索結果" %} - {{ query }}{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">{% trans "検索結果" %}</h1>
+        
+        {% if query %}
+            <p class="lead">
+                {% trans "キーワード" %} <strong>"{{ query }}"</strong> {% trans "に一致する結果が以下のカテゴリで見つかりました。" %}
+            </p>
+        {% else %}
+            <p class="lead">{% trans "検索キーワードを入力してください。" %}</p>
+        {% endif %}
+
+        <hr class="my-5">
+
+        {# --- 学習メモの検索結果 --- #}
+        {% if results.memos %}
+            <h2 class="mb-3">{% trans "学習メモ" %} ({{ results.memos|length }})</h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for memo in results.memos %}
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-primary">{{ memo.subject }} - {{ memo.year }}年 ({{ memo.lesson_date|date:"Y/m/d" }})</h5>
+                                {% if memo.unit %}<small class="text-muted">{% trans "単元" %}: {{ memo.unit }}</small>{% endif %}
+                                <p class="card-text mt-2 mb-2 flex-grow-1 markdown-content">{{ memo.input_text|truncatechars:100|striptags|linebreaksbr }}</p>
+                                <div class="mt-auto">
+                                    <a href="{% url 'memo_app:memo_detail' memo.pk %}" class="btn btn-sm btn-outline-secondary">{% trans "詳細" %}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <hr class="my-5">
+        {% endif %}
+
+        {# --- RAG構成の検索結果 --- #}
+        {% if results.rag_configs %}
+            <h2 class="mb-3">{% trans "RAG構成" %} ({{ results.rag_configs|length }})</h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for config in results.rag_configs %}
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-primary">{{ config.config_name }}</h5>
+                                <p class="card-text flex-grow-1">{{ config.rag_model_name }} / {{ config.embedding_model_name }}</p>
+                                <div class="mt-auto">
+                                    <a href="{% url 'rag_config_log:rag_config_detail' config.pk %}" class="btn btn-sm btn-outline-secondary">{% trans "詳細" %}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <hr class="my-5">
+        {% endif %}
+
+        {# --- RAG評価ログの検索結果 --- #}
+        {% if results.rag_evals %}
+            <h2 class="mb-3">{% trans "RAG評価ログ" %} ({{ results.rag_evals|length }})</h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for eval in results.rag_evals %}
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-primary">{% trans "質問" %}: {{ eval.question|truncatechars:50 }}</h5>
+                                <p class="card-text flex-grow-1">{% trans "評価日時" %}: {{ eval.evaluation_date|date:"Y/m/d H:i" }}</p>
+                                <div class="mt-auto">
+                                    <a href="{% url 'rag_app:rag_evaluation_detail' eval.pk %}" class="btn btn-sm btn-outline-secondary">{% trans "詳細" %}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <hr class="my-5">
+        {% endif %}
+
+        {% if not results.memos and not results.rag_configs and not results.rag_evals and query %}
+            <div class="alert alert-warning" role="alert">
+                {% trans "検索キーワード" %} "<strong>{{ query }}</strong>" {% trans "に一致する結果は見つかりませんでした。" %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

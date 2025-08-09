@@ -7,7 +7,26 @@ from django.http import HttpResponse
 import csv
 from .models import LearningMemo, Tag, MemoAttachment
 from .forms import LearningMemoForm, MemoAttachmentFormSet
+from django.db.models import Q # <-- 検索につかうQオブジェクトをインポート
 
+
+# --- 検索とフィルタリングの共通ロジック ---
+def filter_memos(request, queryset):
+    """
+    クエリパラメータに基づいて、学習メモのクエリセットをフィルタリングするヘルパー関数。
+    """
+    record_type = request.GET.get('record_type')
+    query = request.GET.get('q')
+
+    if record_type:
+        queryset = queryset.filter(record_type=record_type)
+
+    if query:
+        queryset = queryset.filter(
+            Q(input_text__icontains=query) |
+            Q(subject__icontains=query)
+        )
+    return queryset
 
 # --- 学習メモ関連ビュー ---
 
@@ -23,10 +42,12 @@ class MemoListView(LoginRequiredMixin, ListView):
         if record_type:
             queryset = queryset.filter(record_type=record_type)
         return queryset
+        return filter_memos(self.request, queryset) # <-- ヘルパー関数を呼び出す
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['current_record_type'] = self.request.GET.get('record_type')
+        context['query'] = self.request.GET.get('q', '') # <-- 検索フォームへの値の再設定 /memos/?q=キーワード のようになる
         return context
 
 memo_list = MemoListView.as_view()

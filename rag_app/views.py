@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .models import RAGEvaluation
 from .forms import RAGEvaluationForm
+from django.db.models import Q # <-- 検索につかうQオブジェクトをインポート
 
 # --- RAG評価ログ関連ビュー ---
 
@@ -15,7 +16,23 @@ class RAGEvaluationListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return RAGEvaluation.objects.filter(evaluator=self.request.user).order_by('-evaluation_date')
+        queryset = RAGEvaluation.objects.filter(evaluator=self.request.user).order_by('-evaluation_date')
+        query = self.request.GET.get('q') # <-- base.html の検索フォームから送信されたキーワードで、RAG評価ログを横断的に検索
+
+        if query:
+            # 複数のフィールドを横断的に検索
+            queryset = queryset.filter(
+                Q(question__icontains=query) |
+                Q(actual_answer__icontains=query) |
+                Q(notes__icontains=query)
+            )
+
+        return queryset
+    
+    def get_context_data(self, **kwargs): # <-- base.html の検索フォームから送信されたキーワードで、RAG評価ログを横断的に検索
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        return context
 
 rag_evaluation_list = RAGEvaluationListView.as_view()
 

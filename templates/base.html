@@ -39,8 +39,11 @@
                         <a class="nav-link" href="{% url 'rag_evaluator_tool:evaluator_home' %}">{% trans "RAG評価ツール" %}</a>
                     </li>
                 </ul>
+                <form class="d-flex me-3" method="get" action="{% url 'search_results' %}">
+                    <input class="form-control me-2" type="search" placeholder="{% trans 'アプリ内検索' %}" aria-label="Search" name="q">
+                    <button class="btn btn-outline-success" type="submit">{% trans '検索' %}</button>
+                </form>
                 <ul class="navbar-nav">
-                    
                     {% comment %}
                     <li class="nav-item dropdown me-2">
                         <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
