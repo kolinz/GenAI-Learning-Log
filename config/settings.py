@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'rag_app',
     'rag_config_log',
     'rag_evaluator_tool',
+    'todo_app',
 ]
 
 MIDDLEWARE = [

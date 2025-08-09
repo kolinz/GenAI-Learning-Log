@@ -11,7 +11,7 @@ echo "PostgreSQL started"
 sleep 5
 
 # マイグレーションを適用
-python manage.py makemigrations memo_app rag_app rag_config_log rag_evaluator_tool
+python manage.py makemigrations memo_app rag_app rag_config_log rag_evaluator_tool todo_app
 python manage.py migrate
 
 # スーパーユーザーを作成 (本番環境では非推奨だが、ここではデモ用に含める)

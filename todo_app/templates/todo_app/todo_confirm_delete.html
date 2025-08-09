@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "ToDoを削除" %}{% endblock %}
+
+{% block content %}
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">{% trans "本当にこのToDoを削除しますか？" %}</h4>
+        <p>{% trans "以下のToDoが完全に削除されます。この操作は元に戻せません。" %}</p>
+        <ul>
+            <li><strong>{% trans "タスク名" %}:</strong> {{ todo.title }}</li>
+            <li><strong>{% trans "関連メモ" %}:</strong> {{ todo.memo.subject }}</li>
+            <li><strong>{% trans "期限日" %}:</strong> {{ todo.due_date|date:"Y年m月d日 H:i"|default_if_none:"-" }}</li>
+        </ul>
+        <hr>
+        <p class="mb-0">{% trans "このToDoに関連するすべてのデータが失われます。" %}</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger me-2">{% trans "削除する" %}</button>
+        <a href="{% url 'todo_app:todo_detail' todo.pk %}" class="btn btn-secondary">{% trans "キャンセル" %}</a>
+    </form>
+{% endblock %}

@@ -17,6 +17,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('memos/', include('memo_app.urls')),
+    path('todos/', include('todo_app.urls')),
     path('rag_evaluations/', include('rag_app.urls')),
     path('rag_configs/', include('rag_config_log.urls')),
     path('rag_evaluator/', include('rag_evaluator_tool.urls')),

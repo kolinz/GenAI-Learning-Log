@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "ToDo詳細" %} - {{ todo.title }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title text-primary">{{ todo.title }}</h2>
+            <h6 class="card-subtitle mb-3 text-muted">{% trans "作成者" %}: {{ todo.user.username }}</h6>
+
+            <hr>
+            <p><strong>{% trans "関連学習メモ" %}:</strong> <a href="{% url 'memo_app:memo_detail' todo.memo.pk %}">{{ todo.memo.subject }}</a></p>
+            <p><strong>{% trans "詳細" %}:</strong> {{ todo.description|default_if_none:"-" }}</p>
+            <p><strong>{% trans "期限日" %}:</strong> {{ todo.due_date|date:"Y年m月d日 H:i"|default_if_none:"-" }}</p>
+            <p><strong>{% trans "ステータス" %}:</strong>
+                {% if todo.is_completed %}
+                    <span class="badge bg-success">{% trans "完了" %}</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark">{% trans "未完了" %}</span>
+                {% endif %}
+            </p>
+
+            <p class="text-muted small mt-4 mb-1">{% trans "作成日時" %}: {{ todo.created_at|date:"Y年m月d日 H:i" }}</p>
+            
+            <div class="mt-4">
+                <a href="{% url 'todo_app:todo_list' %}" class="btn btn-secondary me-2">{% trans "一覧に戻る" %}</a>
+                {% if todo.user == request.user %}
+                    <a href="{% url 'todo_app:todo_update' todo.pk %}" class="btn btn-warning me-2">{% trans "編集" %}</a>
+                    <a href="{% url 'todo_app:todo_delete' todo.pk %}" class="btn btn-danger">{% trans "削除" %}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

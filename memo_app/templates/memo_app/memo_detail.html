@@ -79,6 +79,32 @@
                 </ul>
             {% endif %}
 
+            <div class="mb-4">
+                <h4 class="text-secondary">{% trans "関連ToDo" %}:</h4>
+                {% if todos %}
+                    <ul class="list-group">
+                        {% for todo in todos %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>
+                                    <a href="{% url 'todo_app:todo_detail' todo.pk %}" class="text-decoration-none">
+                                        {{ todo.title }}
+                                    </a>
+                                    {% if todo.is_completed %}
+                                        <span class="badge bg-success ms-2">{% trans "完了" %}</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark ms-2">{% trans "未完了" %}</span>
+                                    {% endif %}
+                                </span>
+                                <small class="text-muted">{% trans "期限" %}: {{ todo.due_date|date:"Y/m/d H:i"|default_if_none:"-" }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">{% trans "このメモに関連するToDoはありません。" %}</p>
+                {% endif %}
+                <a href="{% url 'todo_app:todo_create' %}?memo_id={{ memo.pk }}" class="btn btn-primary btn-sm mt-3">{% trans "新しいToDoを追加" %}</a>
+            </div>
+
             <p class="text-muted small mt-4 mb-1">{% trans "作成日時" %}: {{ memo.created_at|date:"Y年m月d日 H:i" }}</p>
             <p class="text-muted small">{% trans "最終更新日時" %}: {{ memo.updated_at|date:"Y年m月d日 H:i" }}</p>
 

@@ -8,6 +8,7 @@ import csv
 from .models import LearningMemo, Tag, MemoAttachment
 from .forms import LearningMemoForm, MemoAttachmentFormSet
 from django.db.models import Q # <-- 検索につかうQオブジェクトをインポート
+from todo_app.models import ToDo # <-- ToDo管理モデルをインポート
 
 
 # --- 検索とフィルタリングの共通ロジック ---
@@ -56,6 +57,12 @@ class MemoDetailView(LoginRequiredMixin, DetailView):
     model = LearningMemo
     template_name = 'memo_app/memo_detail.html'
     context_object_name = 'memo'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        memo = self.get_object()
+        context['todos'] = memo.todos.all() # <-- 関連付けられたToDoリストを取得
+        return context
 
 memo_detail = MemoDetailView.as_view()
 

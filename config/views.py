@@ -8,7 +8,7 @@ from rag_config_log.models import RAGConfiguration
 
 def search_results_view(request):
     """
-    全アプリのモデルを横断的に検索するビュー
+    ToDoモデル以外を横断的に検索するビュー
     """
     query = request.GET.get('q')
     results = {
