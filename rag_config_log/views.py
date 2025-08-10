@@ -7,6 +7,8 @@ from .models import RAGConfiguration
 from .forms import RAGConfigurationForm
 from django.db.models import Q # <-- 検索につかうQオブジェクトをインポート
 
+# --- AIエージェント構成関連ビュー ---
+
 class RAGConfigurationListView(LoginRequiredMixin, ListView):
     model = RAGConfiguration
     template_name = 'rag_config_log/rag_config_list.html'
@@ -15,7 +17,7 @@ class RAGConfigurationListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = RAGConfiguration.objects.filter(user=self.request.user).order_by('-created_at')
-        query = self.request.GET.get('q') # <-- base.html の検索フォームから送信されたキーワードで、RAG評価ログを横断的に検索
+        query = self.request.GET.get('q') # <-- base.html の検索フォームから送信されたキーワードで、AIエージェント構成を横断的に検索
 
         if query:
             # 複数のフィールドを横断的に検索
@@ -28,7 +30,7 @@ class RAGConfigurationListView(LoginRequiredMixin, ListView):
 
         return queryset
     
-    def get_context_data(self, **kwargs): # <-- base.html の検索フォームから送信されたキーワードで、RAG評価ログを横断的に検索
+    def get_context_data(self, **kwargs): # <-- base.html の検索フォームから送信されたキーワードで、AIエージェント構成を横断的に検索
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q', '')
         return context

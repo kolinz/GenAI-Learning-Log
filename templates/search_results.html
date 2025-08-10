@@ -39,9 +39,34 @@
             <hr class="my-5">
         {% endif %}
 
-        {# --- RAG構成の検索結果 --- #}
+        {# --- ToDoの検索結果 --- #}
+        {% if results.todos %}
+            <h2 class="mb-3">{% trans "ToDo" %} ({{ results.todos|length }})</h2>
+            <div class="list-group mb-4">
+                {% for todo in results.todos %}
+                    <a href="{% url 'todo_app:todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                {{ todo.title }}
+                                {% if todo.is_completed %}
+                                    <span class="badge bg-success ms-2">{% trans "完了" %}</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark ms-2">{% trans "未完了" %}</span>
+                                {% endif %}
+                            </h5>
+                            <small class="text-muted">{% trans "期限" %}: {{ todo.due_date|date:"Y/m/d H:i"|default_if_none:"-" }}</small>
+                        </div>
+                        <p class="mb-1">{{ todo.description|default_if_none:""|truncatechars:100 }}</p>
+                        <small class="text-muted">{% trans "関連メモ" %}: {{ todo.memo.subject }}</small>
+                    </a>
+                {% endfor %}
+            </div>
+            <hr class="my-5">
+        {% endif %}
+
+        {# --- AIエージェント構成の検索結果 --- #}
         {% if results.rag_configs %}
-            <h2 class="mb-3">{% trans "RAG構成" %} ({{ results.rag_configs|length }})</h2>
+            <h2 class="mb-3">{% trans "AIエージェント構成" %} ({{ results.rag_configs|length }})</h2>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for config in results.rag_configs %}
                     <div class="col">

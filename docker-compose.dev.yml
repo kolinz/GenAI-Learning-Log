@@ -12,6 +12,7 @@ services:
       - .env.dev
     depends_on:
       - db
+      - maildev
   
   db:
     image: postgres:15-alpine
@@ -25,6 +26,12 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+      
+  maildev: # <-- Maildevサービスを追加
+    image: maildev/maildev
+    ports:
+      - "1080:1080" # Webインターフェース
+      - "1025:1025" # SMTPポート
 
 volumes:
   postgres_data:

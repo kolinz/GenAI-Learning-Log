@@ -21,3 +21,14 @@ class ToDoForm(forms.ModelForm):
             'due_date': '期限日',
             'is_completed': '完了済み',
         }
+    
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+        
+        self.fields['memo'].required = False
+        
+        # memo_id がURLパラメータに含まれている場合、初期値を設定
+        if request and 'memo_id' in request.GET:
+            memo_id = request.GET.get('memo_id')
+            self.fields['memo'].initial = memo_id

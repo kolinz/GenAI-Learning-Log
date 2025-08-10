@@ -1,7 +1,7 @@
 # config/settings.py
 
 from pathlib import Path
-import os # ★追加
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,9 +12,23 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 # DEBUGがTrueの場合のみ、ALLOWED_HOSTSに開発環境のホストを追加する
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']
+    # 開発環境用のメール設定
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ.get('EMAIL_HOST')
+    EMAIL_PORT = os.environ.get('EMAIL_PORT')
+    EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'False') == 'True'
+    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 else:
     # 本番環境では環境変数から読み込む
     ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+    # 本番環境用のメール設定
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ.get('EMAIL_HOST')
+    EMAIL_PORT = os.environ.get('EMAIL_PORT')
+    EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS') == 'True'
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 INSTALLED_APPS = [
     'django.contrib.admin',

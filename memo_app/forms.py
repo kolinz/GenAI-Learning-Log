@@ -19,7 +19,7 @@ class LearningMemoForm(forms.ModelForm):
 
     class Meta:
         model = LearningMemo
-        fields = ['record_type', 'input_text', 'subject', 'year', 'lesson_date', 'instruction_text', 'output_text', 'tags']
+        fields = ['record_type', 'subject', 'year', 'lesson_date', 'input_text', 'instruction_text', 'output_text', 'tags']
         widgets = {
             'record_type': forms.Select(attrs={'class': 'form-select'}),
             'subject': forms.TextInput(attrs={'class': 'form-control'}),

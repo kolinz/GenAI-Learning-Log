@@ -1,13 +1,12 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load i18n %}
-
 {% block title %}{% trans "ログイン" %}{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center mt-5">
     <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm">
-            <div class="card-header text-center bg-primary text-white">
+            <div class="card-header text-center">
                 <h3 class="mb-0">{% trans "ログイン" %}</h3>
             </div>
             <div class="card-body">
@@ -18,15 +17,9 @@
                 {% endif %}
 
                 {% if next %}
-                    {% if user.is_authenticated %}
-                        <div class="alert alert-warning" role="alert">
-                            {% trans "このページにアクセスするには、権限のあるアカウントでログインしてください。" %}
-                        </div>
-                    {% else %}
-                        <div class="alert alert-info" role="alert">
-                            {% trans "このページにアクセスするには、ログインが必要です。" %}
-                        </div>
-                    {% endif %}
+                    <div class="alert alert-info" role="alert">
+                        {% trans "このページにアクセスするには、ログインが必要です。" %}
+                    </div>
                 {% endif %}
 
                 <form method="post">
@@ -39,7 +32,10 @@
                         <label for="{{ form.password.id_for_label }}" class="form-label">{% trans "パスワード" %}</label>
                         <input type="password" name="{{ form.password.name }}" id="{{ form.password.id_for_label }}" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 mb-3">{% trans "ログイン" %}</button>
+                    <div class="mb-3">
+                        <a href="{% url 'password_reset' %}" class="float-end">{% trans "パスワードを忘れた方はこちら" %}</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">{% trans "ログイン" %}</button>
                     <input type="hidden" name="next" value="{{ next }}">
                 </form>
                 <p class="text-center text-muted">

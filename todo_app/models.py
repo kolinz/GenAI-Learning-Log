@@ -11,7 +11,7 @@ from memo_app.models import LearningMemo
 class ToDo(models.Model):
     """学習メモに関連付けられるToDoタスク"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作成者")
-    memo = models.ForeignKey(LearningMemo, on_delete=models.CASCADE, related_name='todos', verbose_name="関連学習メモ")
+    memo = models.ForeignKey(LearningMemo, on_delete=models.CASCADE, related_name='todos', verbose_name="関連学習メモ", blank=True, null=True)
     title = models.CharField(max_length=255, verbose_name="タスク名")
     description = models.TextField(verbose_name="詳細", blank=True, null=True)
     due_date = models.DateTimeField(verbose_name="期限日", blank=True, null=True)
