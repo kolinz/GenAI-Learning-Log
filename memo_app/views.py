@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 import csv
+import datetime
 from .models import LearningMemo, Tag, MemoAttachment
 from .forms import LearningMemoForm, MemoAttachmentFormSet
 from django.db.models import Q # <-- 検索につかうQオブジェクトをインポート
@@ -36,14 +37,11 @@ class MemoListView(LoginRequiredMixin, ListView):
     template_name = 'memo_app/memo_list.html'
     context_object_name = 'memos'
     paginate_by = 9
-
+    
     def get_queryset(self):
+        # まずログインユーザーのメモを取得し、その後にヘルパー関数でフィルタリングする
         queryset = LearningMemo.objects.filter(user=self.request.user).order_by('-created_at')
-        record_type = self.request.GET.get('record_type')
-        if record_type:
-            queryset = queryset.filter(record_type=record_type)
-        return queryset
-        return filter_memos(self.request, queryset) # <-- ヘルパー関数を呼び出す
+        return filter_memos(self.request, queryset)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -167,11 +165,11 @@ class TaggedMemoListView(LoginRequiredMixin, ListView):
 
 tagged_memo_list = TaggedMemoListView.as_view()
 
-# --- CSVエクスポートビュー ---
 
+# --- CSVエクスポートビュー ---
 class LearningMemoExportCSVView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        # GETリクエストの場合の処理 (record_typeフィルタリング)
+        # GETリクエストの場合の処理 (全メモをエクスポート)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="learning_memos.csv"'
         
@@ -183,15 +181,13 @@ class LearningMemoExportCSVView(LoginRequiredMixin, View):
         ])
 
         memos = LearningMemo.objects.filter(user=request.user).order_by('created_at')
-        record_type = request.GET.get('record_type')
-        if record_type:
-            memos = memos.filter(record_type=record_type)
 
         for memo in memos:
             tags = ", ".join([tag.name for tag in memo.tags.all()])
             writer.writerow([
                 memo.id, memo.user.username, memo.get_record_type_display(), memo.input_text,
-                memo.subject, memo.year, memo.unit, memo.lesson_date.strftime('%Y-%m-%d'),
+                memo.subject, memo.year, memo.unit, 
+                memo.lesson_date.strftime('%Y-%m-%d'),
                 memo.instruction_text, memo.output_text, tags,
                 memo.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                 memo.updated_at.strftime('%Y-%m-%d %H:%M:%S')
@@ -202,31 +198,67 @@ class LearningMemoExportCSVView(LoginRequiredMixin, View):
         # POSTリクエストの場合の処理 (選択されたメモのIDでフィルタリング)
         selected_memos_ids = request.POST.getlist('selected_memos')
         if not selected_memos_ids:
-            # メモが選択されていない場合は、メモ一覧に戻るか、エラーメッセージを表示
             return redirect('memo_app:memo_list')
+
+        # フォームから選択されたフィールドを取得
+        selected_fields = request.POST.getlist('fields')
+        if not selected_fields:
+            # フィールドが選択されていない場合は、すべての項目を出力
+            selected_fields = [
+                'id', 'user__username', 'get_record_type_display', 'input_text',
+                'subject', 'year', 'unit', 'lesson_date',
+                'instruction_text', 'output_text', 'tags_list',
+                'created_at', 'updated_at'
+            ]
+
+        # 出力するフィールドのヘッダーを生成
+        header_map = {
+            'id': 'ID',
+            'user__username': '作成者',
+            'get_record_type_display': '記録の種別',
+            'input_text': '記録内容',
+            'subject': '科目名',
+            'year': '年度',
+            'unit': '単元',
+            'lesson_date': '授業日',
+            'instruction_text': '想定される質問例',
+            'output_text': '質問への回答例',
+            'tags_list': 'タグ',
+            'created_at': '作成日時',
+            'updated_at': '更新日時',
+        }
+        headers = [header_map.get(field, field) for field in selected_fields]
 
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="selected_memos.csv"'
 
         writer = csv.writer(response)
-        
-        writer.writerow([
-            'ID', '作成者', '記録の種別', '記録内容', '科目名', '年度', '単元', '授業日', '想定される質問例',
-            '質問への回答例', 'タグ', '作成日時', '更新日時'
-        ])
+        writer.writerow(headers)
 
-        # 選択されたIDに基づいてメモを取得
         memos = LearningMemo.objects.filter(user=request.user, id__in=selected_memos_ids).order_by('created_at')
 
         for memo in memos:
-            tags = ", ".join([tag.name for tag in memo.tags.all()])
-            writer.writerow([
-                memo.id, memo.user.username, memo.get_record_type_display(), memo.input_text,
-                memo.subject, memo.year, memo.unit, memo.lesson_date.strftime('%Y-%m-%d'),
-                memo.instruction_text, memo.output_text, tags,
-                memo.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                memo.updated_at.strftime('%Y-%m-%d %H:%M:%S')
-            ])
+            row = []
+            for field in selected_fields:
+                if field == 'tags_list':
+                    value = ", ".join([tag.name for tag in memo.tags.all()])
+                elif field == 'user__username':
+                    value = memo.user.username
+                elif field == 'get_record_type_display':
+                    value = memo.get_record_type_display()
+                else:
+                    value = getattr(memo, field)
+                
+                # 日付型の場合、文字列にフォーマット
+                # lesson_dateには時間を含めず、created_atとupdated_atには時間を含めるように修正
+                if isinstance(value, datetime.date):
+                    value = value.strftime('%Y-%m-%d')
+                elif isinstance(value, datetime.datetime):
+                    value = value.strftime('%Y-%m-%d %H:%M:%S')
+
+                row.append(value)
+            writer.writerow(row)
+            
         return response
 
 learning_memo_export_csv = LearningMemoExportCSVView.as_view()

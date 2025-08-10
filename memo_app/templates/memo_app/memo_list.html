@@ -15,6 +15,9 @@
                 </p>
                 <div class="mt-4">
                     <a href="{% url 'memo_app:memo_create' %}" class="btn btn-primary my-2 me-2">{% trans "新しいメモを作成" %}</a>
+                    <button type="button" class="btn btn-secondary my-2" data-bs-toggle="modal" data-bs-target="#exportModal">
+                      {% trans "選択したメモをCSVエクスポート" %}
+                    </button>
                 </div>
                 <div class="mt-4">
                     <a href="{% url 'memo_app:memo_list' %}" class="btn btn-outline-dark {% if not current_record_type %}active{% endif %}">{% trans "すべて" %}</a>
@@ -27,7 +30,7 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-            <form method="post" action="{% url 'memo_app:learning_memo_export_csv' %}">
+            <form id="memoForm" method="post" action="{% url 'memo_app:learning_memo_export_csv' %}">
                 {% csrf_token %}
                 {% if memos %}
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -81,9 +84,89 @@
                     </div>
                 {% endif %}
                 <div class="mt-4 text-center">
-                    <button type="submit" class="btn btn-success">{% trans "選択したメモをエクスポート" %}</button>
+                    {# 「選択したメモをエクスポート」ボタンは、モーダルで代替するため削除 #}
                 </div>
             </form>
         </div>
     </div>
+    {# エクスポートオプションのモーダルフォーム #}
+    <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportModalLabel">{% trans "CSVエクスポートオプション" %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="exportForm" method="post" action="{% url 'memo_app:learning_memo_export_csv' %}">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <p>{% trans "以下の項目から、エクスポートしたいものを選択してください。" %}</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="fields" value="subject" id="checkSubject" checked>
+                            <label class="form-check-label" for="checkSubject">
+                            {% trans "科目" %}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="fields" value="year" id="checkYear" checked>
+                            <label class="form-check-label" for="checkYear">
+                            {% trans "年度" %}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="fields" value="lesson_date" id="checkLessonDate" checked>
+                            <label class="form-check-label" for="checkLessonDate">
+                            {% trans "授業日" %}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="fields" value="input_text" id="checkInputText" checked>
+                            <label class="form-check-label" for="checkInputText">
+                            {% trans "記録内容" %}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="fields" value="instruction_text" id="checkInstruction" checked>
+                            <label class="form-check-label" for="checkInstruction">
+                            {% trans "想定される質問例" %}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="fields" value="output_text" id="checkOutput" checked>
+                            <label class="form-check-label" for="checkOutput">
+                            {% trans "質問への回答例" %}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="fields" value="tags" id="checkTags" checked>
+                            <label class="form-check-label" for="checkTags">
+                            {% trans "タグ" %}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "キャンセル" %}</button>
+                        <button type="submit" class="btn btn-primary" id="exportFromModalButton">{% trans "エクスポート" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {# エクスポートのためのモーダルウィンドウのためのJavaScriptを追加 #}
+    <script>
+        document.getElementById('exportModal').addEventListener('show.bs.modal', function () {
+            const selectedMemos = Array.from(document.querySelectorAll('input[name="selected_memos"]:checked')).map(cb => cb.value);
+            const modalForm = document.getElementById('exportForm');
+            const hiddenInputs = modalForm.querySelectorAll('input[name="selected_memos"]');
+            hiddenInputs.forEach(input => input.remove());
+            
+            selectedMemos.forEach(id => {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'selected_memos';
+                hiddenInput.value = id;
+                modalForm.appendChild(hiddenInput);
+            });
+        });
+    </script>
 {% endblock %}

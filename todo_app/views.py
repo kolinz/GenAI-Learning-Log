@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
+from memo_app.models import LearningMemo
 from .models import ToDo
 from .forms import ToDoForm
 
@@ -29,6 +30,13 @@ class ToDoCreateView(LoginRequiredMixin, CreateView):
     form_class = ToDoForm
     template_name = 'todo_app/todo_form.html'
     success_url = reverse_lazy('todo_app:todo_list')
+
+    def get_initial(self):
+        initial = super().get_initial()
+        memo_id = self.request.GET.get('memo_id')
+        if memo_id:
+            initial['memo'] = get_object_or_404(LearningMemo, pk=memo_id) # <-- memo_idを初期値として設定
+        return initial
 
     def form_valid(self, form):
         form.instance.user = self.request.user

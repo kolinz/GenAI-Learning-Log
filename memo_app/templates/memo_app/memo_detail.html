@@ -104,7 +104,7 @@
                 {% endif %}
                 <a href="{% url 'todo_app:todo_create' %}?memo_id={{ memo.pk }}" class="btn btn-primary btn-sm mt-3">{% trans "新しいToDoを追加" %}</a>
             </div>
-
+            
             <p class="text-muted small mt-4 mb-1">{% trans "作成日時" %}: {{ memo.created_at|date:"Y年m月d日 H:i" }}</p>
             <p class="text-muted small">{% trans "最終更新日時" %}: {{ memo.updated_at|date:"Y年m月d日 H:i" }}</p>
 
