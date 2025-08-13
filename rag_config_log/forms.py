@@ -22,6 +22,7 @@ class RAGConfigurationForm(forms.ModelForm):
             'rag_tool_name',
             'rag_tool_version',
             'rag_type',
+            'based_on_config',
             'rag_workflow_file',
             'description',
             'used_memos',
@@ -36,6 +37,7 @@ class RAGConfigurationForm(forms.ModelForm):
             'rag_tool_name': forms.TextInput(attrs={'class': 'form-control'}),
             'rag_tool_version': forms.TextInput(attrs={'class': 'form-control'}),
             'rag_type': forms.Select(attrs={'class': 'form-select'}),
+            'based_on_config': forms.Select(attrs={'class': 'form-select'}),
             'rag_workflow_file': forms.FileInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}),
         }
@@ -48,6 +50,7 @@ class RAGConfigurationForm(forms.ModelForm):
             'rag_tool_name': 'ツール名 (例: DifyやLangflowなど)',
             'rag_tool_version': 'ツールバージョン',
             'rag_type': 'RAGの種類',
+            'based_on_config': '見本にした構成',
             'rag_workflow_file': 'ワークフローファイル',
             'description': 'AIエージェント構成の詳細説明',
             'used_memos': '使用した学習メモ',

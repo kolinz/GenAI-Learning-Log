@@ -17,7 +17,7 @@
                     {{ field }}
                     {% if field.help_text %}<div class="form-text text-muted">{{ field.help_text }}</div>{% endif %}
                     {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
-                    <a href="{% url 'rag_config_log:rag_config_create' %}" class="btn btn-outline-primary btn-sm mt-2">{% trans "新しいRAG構成を作成" %}</a>
+                    <a href="{% url 'rag_config_log:rag_config_create' %}" class="btn btn-outline-primary btn-sm mt-2">{% trans "新しいAIエージェント構成を作成" %}</a>
                 {% elif field.name == 'related_memos_as_context' %}
                     <label class="form-label d-block">{{ field.label }}</label>
                     <div class="border rounded p-3 bg-light" style="max-height: 200px; overflow-y: auto;">

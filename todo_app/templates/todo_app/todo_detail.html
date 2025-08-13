@@ -10,7 +10,11 @@
             <h6 class="card-subtitle mb-3 text-muted">{% trans "作成者" %}: {{ todo.user.username }}</h6>
 
             <hr>
-            <p><strong>{% trans "関連学習メモ" %}:</strong> <a href="{% url 'memo_app:memo_detail' todo.memo.pk %}">{{ todo.memo.subject }}</a></p>
+            {% if todo.memo %}
+                <p><strong>{% trans "関連学習メモ" %}:</strong> <a href="{% url 'memo_app:memo_detail' todo.memo.pk %}">{{ todo.memo.subject }}</a></p>
+            {% else %}
+                <p><strong>{% trans "関連学習メモ" %}:</strong> {% trans "なし" %}</p>
+            {% endif %}
             <p><strong>{% trans "詳細" %}:</strong> {{ todo.description|default_if_none:"-" }}</p>
             <p><strong>{% trans "期限日" %}:</strong> {{ todo.due_date|date:"Y年m月d日 H:i"|default_if_none:"-" }}</p>
             <p><strong>{% trans "ステータス" %}:</strong>

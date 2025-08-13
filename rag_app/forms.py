@@ -8,7 +8,7 @@ class RAGEvaluationForm(forms.ModelForm):
     rag_config = forms.ModelChoiceField(
         queryset=RAGConfiguration.objects.all().order_by('config_name'),
         widget=forms.Select(attrs={'class': 'form-select'}),
-        label="関連RAG構成"
+        label="関連AIエージェント構成"
     )
 
     related_memos_as_context = forms.ModelMultipleChoiceField(
@@ -47,7 +47,7 @@ class RAGEvaluationForm(forms.ModelForm):
             'evaluator': forms.Select(attrs={'class': 'form-select'}),
         }
         labels = {
-            'rag_config': '関連RAG構成',
+            'rag_config': '関連AIエージェント構成',
             'evaluation_date': '評価日時',
             'evaluator': '評価者',
             'question': '質問文',

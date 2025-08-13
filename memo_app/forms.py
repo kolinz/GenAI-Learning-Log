@@ -19,12 +19,13 @@ class LearningMemoForm(forms.ModelForm):
 
     class Meta:
         model = LearningMemo
-        fields = ['record_type', 'subject', 'year', 'lesson_date', 'input_text', 'instruction_text', 'output_text', 'tags']
+        fields = ['record_type', 'subject', 'year', 'lesson_date', 'unit', 'input_text', 'instruction_text', 'output_text', 'tags']
         widgets = {
             'record_type': forms.Select(attrs={'class': 'form-select'}),
             'subject': forms.TextInput(attrs={'class': 'form-control'}),
             'year': forms.NumberInput(attrs={'class': 'form-control'}),
             'lesson_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'unit': forms.TextInput(attrs={'class': 'form-control'}),
             'input_text': forms.Textarea(attrs={'rows': 10, 'class': 'form-control'}),
             'instruction_text': forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}),
             'output_text': forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}),
@@ -35,6 +36,7 @@ class LearningMemoForm(forms.ModelForm):
             'subject': '科目名',
             'year': '年度',
             'lesson_date': '授業日',
+            'unit': '単元',
             'input_text': '記録内容（マークダウン形式）',
             'instruction_text': '想定される質問例',
             'output_text': '質問への回答例',

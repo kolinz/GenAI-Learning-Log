@@ -17,6 +17,10 @@
             <p><strong>{% trans "Embeddingモデル" %}:</strong> {{ config.embedding_model_name }} {% if config.embedding_model_version %}(v{{ config.embedding_model_version }}){% endif %}</p>
             <p><strong>{% trans "ツール" %}:</strong> {{ config.rag_tool_name|default:"-" }} {% if config.rag_tool_version %}(v{{ config.rag_tool_version }}){% endif %}</p>
             <p><strong>{% trans "RAGの種類" %}:</strong> {{ config.get_rag_type_display }}</p>
+            
+            {% if config.based_on_config %}
+                <p><strong>{% trans "見本にした構成" %}:</strong> <a href="{% url 'rag_config_log:rag_config_detail' config.based_on_config.pk %}">{{ config.based_on_config.config_name }}</a></p>
+            {% endif %}
 
             {% if config.rag_workflow_file %}
                 <p><strong>{% trans "ワークフローファイル" %}:</strong>

@@ -105,16 +105,21 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'Asia/Tokyo'
-
-USE_I18N = True
-
-USE_TZ = True
+LANGUAGES = [
+    ('ja', 'Japanese'),
+    ('en', 'English'),
+]
 
 # 翻訳ファイルを置くディレクトリを指定
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+TIME_ZONE = 'Asia/Tokyo'
+
+USE_I18N = True
+
+USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'

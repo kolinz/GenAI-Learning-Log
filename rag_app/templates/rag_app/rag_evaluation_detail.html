@@ -12,10 +12,10 @@
             <h6 class="card-subtitle mb-3 text-muted">{% trans "評価者" %}: {{ evaluation.evaluator.username|default:"N/A" }}</h6>
 
             <hr>
-            <h4 class="text-secondary mb-3">{% trans "関連RAG構成" %}: <a href="{% url 'rag_config_log:rag_config_detail' evaluation.rag_config.pk %}" class="text-decoration-none">{{ evaluation.rag_config.config_name }}</a></h4>
+            <h4 class="text-secondary mb-3">{% trans "関連AIエージェント構成" %}: <a href="{% url 'rag_config_log:rag_config_detail' evaluation.rag_config.pk %}" class="text-decoration-none">{{ evaluation.rag_config.config_name }}</a></h4>
             <p><strong>{% trans "LLM" %}:</strong> {{ evaluation.rag_config.rag_model_name }} {% if evaluation.rag_config.rag_model_version %}(v{{ evaluation.rag_config.rag_model_version }}){% endif %}</p>
             <p><strong>{% trans "Embeddingモデル" %}:</strong> {{ evaluation.rag_config.embedding_model_name }} {% if evaluation.rag_config.embedding_model_version %}(v{{ evaluation.rag_config.embedding_model_version }}){% endif %}</p>
-            <p><strong>{% trans "RAGツール" %}:</strong> {{ evaluation.rag_config.rag_tool_name|default:"-" }} {% if evaluation.rag_config.rag_tool_version %}(v{{ evaluation.rag_config.rag_tool_version }}){% endif %}</p>
+            <p><strong>{% trans "AIエージェントツール" %}:</strong> {{ evaluation.rag_config.rag_tool_name|default:"-" }} {% if evaluation.rag_config.rag_tool_version %}(v{{ evaluation.rag_config.rag_tool_version }}){% endif %}</p>
             <p><strong>{% trans "RAGの種類" %}:</strong> {{ evaluation.rag_config.get_rag_type_display }}</p>
 
             {% if evaluation.rag_config.rag_workflow_file %}

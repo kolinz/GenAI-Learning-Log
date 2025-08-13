@@ -67,17 +67,24 @@
                     <button class="btn btn-outline-success" type="submit">{% trans '検索' %}</button>
                 </form>
                 <ul class="navbar-nav">
-                    {% comment %}
+                    
                     <li class="nav-item dropdown me-2">
                         <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {% trans "言語" %}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                            <li><a class="dropdown-item" href="{% url 'set_language' %}?next={{ request.path }}&language=ja">{% trans "日本語" %}</a></li>
-                            <li><a class="dropdown-item" href="{% url 'set_language' %}?next={{ request.path }}&language=en">{% trans "English" %}</a></li>
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <li>
+                                    <button type="submit" name="language" value="ja" class="dropdown-item">{% trans "日本語" %}</button>
+                                </li>
+                                <li>
+                                    <button type="submit" name="language" value="en" class="dropdown-item">{% trans "English" %}</button>
+                                </li>
+                            </form>
                         </ul>
                     </li>
-                    {% endcomment %}
 
                     {% if user.is_authenticated %}
                         <li class="nav-item">

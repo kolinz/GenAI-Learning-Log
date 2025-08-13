@@ -16,7 +16,8 @@ class RAGConfigurationListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = RAGConfiguration.objects.filter(user=self.request.user).order_by('-created_at')
+        # queryset = RAGConfiguration.objects.filter(user=self.request.user).order_by('-created_at') # 作成者のもののみ表示
+        queryset = RAGConfiguration.objects.all().order_by('-created_at') # 全員が参照のみ可能
         query = self.request.GET.get('q') # <-- base.html の検索フォームから送信されたキーワードで、AIエージェント構成を横断的に検索
 
         if query:

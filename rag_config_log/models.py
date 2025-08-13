@@ -43,6 +43,15 @@ class RAGConfiguration(models.Model):
         verbose_name="使用した学習メモ"
     )
 
+    based_on_config = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='derived_configs',
+        verbose_name="見本にした構成"
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作成者")
     description = models.TextField(blank=True, null=True, verbose_name="AIエージェント構成の詳細説明")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="作成日時")

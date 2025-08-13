@@ -24,7 +24,6 @@
                         </h5>
                         <small class="text-muted">{% trans "期限" %}: {{ todo.due_date|date:"Y/m/d H:i" }}</small>
                     </div>
-                    <p class="mb-1">{{ todo.description|default_if_none:""|truncatechars:100 }}</p>
                     <small class="text-muted">{% trans "関連メモ" %}: {{ todo.memo.subject }}</small>
                 </a>
             {% endfor %}

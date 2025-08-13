@@ -1,0 +1,832 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-13 16:27+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: memo_app/templates/memo_app/_export_modal.html:8
+#: memo_app/templates/memo_app/memo_list.html:97
+msgid "CSVエクスポートオプション"
+msgstr "CSVエクスポートオプション"
+
+#: memo_app/templates/memo_app/_export_modal.html:14
+#: memo_app/templates/memo_app/memo_list.html:103
+msgid "以下の項目から、エクスポートしたいものを選択してください。"
+msgstr "以下の項目から、エクスポートしたいものを選択してください。"
+
+#: memo_app/templates/memo_app/_export_modal.html:18
+#: memo_app/templates/memo_app/memo_confirm_delete.html:11
+#: memo_app/templates/memo_app/memo_list.html:107
+msgid "科目"
+msgstr "科目"
+
+#: memo_app/templates/memo_app/_export_modal.html:24
+#: memo_app/templates/memo_app/memo_confirm_delete.html:12
+#: memo_app/templates/memo_app/memo_list.html:113
+msgid "年度"
+msgstr "年度"
+
+#: memo_app/templates/memo_app/_export_modal.html:30
+#: memo_app/templates/memo_app/memo_confirm_delete.html:13
+#: memo_app/templates/memo_app/memo_detail.html:13
+#: memo_app/templates/memo_app/memo_list.html:119
+msgid "授業日"
+msgstr "授業日"
+
+#: memo_app/templates/memo_app/_export_modal.html:36
+#: memo_app/templates/memo_app/memo_confirm_delete.html:14
+#: memo_app/templates/memo_app/memo_detail.html:15
+#: memo_app/templates/memo_app/memo_list.html:46
+#: memo_app/templates/memo_app/memo_list.html:125
+#: templates/search_results.html:29
+msgid "単元"
+msgstr "単元"
+
+#: memo_app/templates/memo_app/_export_modal.html:42
+#: memo_app/templates/memo_app/memo_detail.html:35
+#: memo_app/templates/memo_app/memo_list.html:131
+msgid "記録内容"
+msgstr "記録内容"
+
+#: memo_app/templates/memo_app/_export_modal.html:48
+#: memo_app/templates/memo_app/memo_detail.html:45
+#: memo_app/templates/memo_app/memo_list.html:137
+msgid "想定される質問例"
+msgstr "想定される質問例"
+
+#: memo_app/templates/memo_app/_export_modal.html:54
+#: memo_app/templates/memo_app/memo_detail.html:54
+#: memo_app/templates/memo_app/memo_list.html:143
+msgid "質問への回答例"
+msgstr "質問への回答例"
+
+#: memo_app/templates/memo_app/_export_modal.html:60
+#: memo_app/templates/memo_app/memo_detail.html:20
+#: memo_app/templates/memo_app/memo_list.html:149
+msgid "タグ"
+msgstr "タグ"
+
+#: memo_app/templates/memo_app/_export_modal.html:65
+#: memo_app/templates/memo_app/memo_confirm_delete.html:24
+#: memo_app/templates/memo_app/memo_form.html:100
+#: memo_app/templates/memo_app/memo_list.html:154
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:22
+#: rag_app/templates/rag_app/rag_evaluation_form.html:65
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:22
+#: rag_config_log/templates/rag_config_log/rag_config_form.html:53
+#: todo_app/templates/todo_app/todo_confirm_delete.html:22
+#: todo_app/templates/todo_app/todo_form.html:34
+msgid "キャンセル"
+msgstr "キャンセル"
+
+#: memo_app/templates/memo_app/_export_modal.html:66
+#: memo_app/templates/memo_app/memo_list.html:155
+msgid "エクスポート"
+msgstr "エクスポート"
+
+#: memo_app/templates/memo_app/memo_confirm_delete.html:4
+msgid "メモを削除"
+msgstr "メモを削除"
+
+#: memo_app/templates/memo_app/memo_confirm_delete.html:8
+msgid "本当にこのメモを削除しますか？"
+msgstr "本当にこのメモを削除しますか？"
+
+#: memo_app/templates/memo_app/memo_confirm_delete.html:9
+msgid "以下のメモが完全に削除されます。この操作は元に戻せません。"
+msgstr "以下のメモが完全に削除されます。この操作は元に戻せません。"
+
+#: memo_app/templates/memo_app/memo_confirm_delete.html:15
+#: memo_app/templates/memo_app/memo_detail.html:12
+#: memo_app/templates/memo_app/memo_list.html:50
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:12
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:23
+#: todo_app/templates/todo_app/todo_detail.html:10
+msgid "作成者"
+msgstr "作成者"
+
+#: memo_app/templates/memo_app/memo_confirm_delete.html:18
+msgid "このメモに関連するすべてのデータが失われます。"
+msgstr "このメモに関連するすべてのデータが失われます。"
+
+#: memo_app/templates/memo_app/memo_confirm_delete.html:23
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:21
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:21
+#: todo_app/templates/todo_app/todo_confirm_delete.html:21
+msgid "削除する"
+msgstr "削除する"
+
+#: memo_app/templates/memo_app/memo_detail.html:6
+msgid "メモ詳細"
+msgstr "メモ詳細"
+
+#: memo_app/templates/memo_app/memo_detail.html:30
+msgid "記録の種別"
+msgstr "記録の種別"
+
+#: memo_app/templates/memo_app/memo_detail.html:63
+#: memo_app/templates/memo_app/memo_form.html:44
+msgid "添付ファイル"
+msgstr "添付ファイル"
+
+#: memo_app/templates/memo_app/memo_detail.html:83
+msgid "関連ToDo"
+msgstr "関連ToDo"
+
+#: memo_app/templates/memo_app/memo_detail.html:93
+#: templates/search_results.html:52
+#: todo_app/templates/todo_app/todo_detail.html:18
+#: todo_app/templates/todo_app/todo_list.html:20
+msgid "完了"
+msgstr "完了"
+
+#: memo_app/templates/memo_app/memo_detail.html:95
+#: templates/search_results.html:54
+#: todo_app/templates/todo_app/todo_detail.html:20
+#: todo_app/templates/todo_app/todo_list.html:22
+msgid "未完了"
+msgstr "未完了"
+
+#: memo_app/templates/memo_app/memo_detail.html:98
+#: templates/search_results.html:57
+#: todo_app/templates/todo_app/todo_list.html:25
+msgid "期限"
+msgstr "期限"
+
+#: memo_app/templates/memo_app/memo_detail.html:103
+msgid "このメモに関連するToDoはありません。"
+msgstr "このメモに関連するToDoはありません。"
+
+#: memo_app/templates/memo_app/memo_detail.html:105
+msgid "新しいToDoを追加"
+msgstr "新しいToDoを追加"
+
+#: memo_app/templates/memo_app/memo_detail.html:108
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:80
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:24
+#: todo_app/templates/todo_app/todo_detail.html:24
+msgid "作成日時"
+msgstr "作成日時"
+
+#: memo_app/templates/memo_app/memo_detail.html:109
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:102
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:81
+msgid "最終更新日時"
+msgstr "最終更新日時"
+
+#: memo_app/templates/memo_app/memo_detail.html:112
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:105
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:84
+#: todo_app/templates/todo_app/todo_detail.html:27
+msgid "一覧に戻る"
+msgstr "一覧に戻る"
+
+#: memo_app/templates/memo_app/memo_detail.html:114
+#: memo_app/templates/memo_app/memo_list.html:64
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:107
+#: rag_app/templates/rag_app/rag_evaluation_list.html:43
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:86
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:49
+#: todo_app/templates/todo_app/todo_detail.html:29
+msgid "編集"
+msgstr "編集"
+
+#: memo_app/templates/memo_app/memo_detail.html:115
+#: memo_app/templates/memo_app/memo_form.html:56
+#: memo_app/templates/memo_app/memo_form.html:117
+#: memo_app/templates/memo_app/memo_list.html:65
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:108
+#: rag_app/templates/rag_app/rag_evaluation_list.html:44
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:87
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:50
+#: todo_app/templates/todo_app/todo_detail.html:30
+msgid "削除"
+msgstr "削除"
+
+#: memo_app/templates/memo_app/memo_form.html:5
+#: memo_app/templates/memo_app/memo_form.html:8
+msgid "メモを編集"
+msgstr "メモを編集"
+
+#: memo_app/templates/memo_app/memo_form.html:5
+#: memo_app/templates/memo_app/memo_form.html:8
+#: memo_app/templates/memo_app/memo_list.html:17
+msgid "新しいメモを作成"
+msgstr "新しいメモを作成"
+
+#: memo_app/templates/memo_app/memo_form.html:51
+msgid "既存ファイル"
+msgstr ""
+
+#: memo_app/templates/memo_app/memo_form.html:65
+#: memo_app/templates/memo_app/memo_form.html:124
+msgid "ファイル"
+msgstr "ファイル"
+
+#: memo_app/templates/memo_app/memo_form.html:72
+#: memo_app/templates/memo_app/memo_form.html:128
+msgid "説明"
+msgstr "説明"
+
+#: memo_app/templates/memo_app/memo_form.html:82
+msgid "ファイルを追加"
+msgstr "ファイルを追加"
+
+#: memo_app/templates/memo_app/memo_form.html:99
+#: rag_app/templates/rag_app/rag_evaluation_form.html:64
+#: rag_config_log/templates/rag_config_log/rag_config_form.html:52
+#: todo_app/templates/todo_app/todo_form.html:33
+msgid "保存"
+msgstr "保存"
+
+#: memo_app/templates/memo_app/memo_list.html:6
+msgid "学習メモ一覧"
+msgstr "学習メモ一覧"
+
+#: memo_app/templates/memo_app/memo_list.html:12
+msgid "学習メモギャラリー"
+msgstr "学習メモギャラリー"
+
+#: memo_app/templates/memo_app/memo_list.html:14
+msgid ""
+"これまでに学習した内容を記録したメモの一覧です。カードをクリックして詳細を確"
+"認したり、新しいメモを作成したりできます。"
+msgstr ""
+"これまでに学習した内容を記録したメモの一覧です。カードをクリックして詳細を確"
+"認したり、新しいメモを作成したりできます。"
+
+#: memo_app/templates/memo_app/memo_list.html:19
+msgid "選択したメモをCSVエクスポート"
+msgstr "選択したメモをCSVエクスポート"
+
+#: memo_app/templates/memo_app/memo_list.html:23
+msgid "すべて"
+msgstr "すべて"
+
+#: memo_app/templates/memo_app/memo_list.html:24 templates/base.html:48
+#: templates/search_results.html:22
+msgid "学習メモ"
+msgstr "学習メモ"
+
+#: memo_app/templates/memo_app/memo_list.html:25
+msgid "AIとの対話記録"
+msgstr "AIとの対話記録"
+
+#: memo_app/templates/memo_app/memo_list.html:62
+#: rag_app/templates/rag_app/rag_evaluation_list.html:41
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:47
+#: templates/search_results.html:32 templates/search_results.html:78
+#: templates/search_results.html:99
+#: todo_app/templates/todo_app/todo_detail.html:14
+msgid "詳細"
+msgstr "詳細"
+
+#: memo_app/templates/memo_app/memo_list.html:68
+msgid "最終更新"
+msgstr "最終更新"
+
+#: memo_app/templates/memo_app/memo_list.html:76
+#: memo_app/templates/memo_app/memo_list.html:83
+msgid "まだメモがありません。新しいメモを作成しましょう！"
+msgstr "まだメモがありません。新しいメモを作成しましょう！"
+
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:4
+msgid "RAG評価を削除"
+msgstr "RAG評価を削除"
+
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:8
+msgid "本当にこのRAG評価ログを削除しますか？"
+msgstr "本当にこのRAG評価ログを削除しますか？"
+
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:9
+msgid "以下の評価ログが完全に削除されます。この操作は元に戻せません。"
+msgstr "以下の評価ログが完全に削除されます。この操作は元に戻せません。"
+
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:11
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:32
+#: rag_app/templates/rag_app/rag_evaluation_list.html:21
+msgid "質問文"
+msgstr "質問文"
+
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:12
+#: rag_app/templates/rag_app/rag_evaluation_list.html:18
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:69
+#: templates/search_results.html:97
+msgid "評価日時"
+msgstr "評価日時"
+
+#: rag_app/templates/rag_app/rag_evaluation_list.html:20
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:13
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:15
+#: templates/base.html:54 templates/search_results.html:69
+msgid "AIエージェント構成"
+msgstr "AIエージェント構成"
+
+#: rag_app/templates/rag_app/rag_evaluation_confirm_delete.html:16
+msgid "このログに関連するすべてのデータが失われます。"
+msgstr "このログに関連するすべてのデータが失われます。"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:6
+msgid "RAG評価ログ詳細"
+msgstr "RAG評価ログ詳細"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:11
+#: rag_app/templates/rag_app/rag_evaluation_list.html:9 templates/base.html:61
+#: templates/search_results.html:90
+msgid "RAG評価ログ"
+msgstr "RAG評価ログ"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:12
+#: rag_app/templates/rag_app/rag_evaluation_list.html:19
+msgid "評価者"
+msgstr "評価者"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:15
+msgid "関連AIエージェント構成"
+msgstr "関連AIエージェント構成"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:16
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:12
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:16
+msgid "LLM"
+msgstr "LLM"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:17
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:17
+msgid "Embeddingモデル"
+msgstr "Embeddingモデル"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:18
+msgid "AIエージェントツール"
+msgstr "AIエージェントツール"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:19
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:19
+msgid "RAGの種類"
+msgstr "RAGの種類"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:22
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:26
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:21
+msgid "ワークフローファイル"
+msgstr "ワークフローファイル"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:30
+msgid "RAGAS評価パラメータ"
+msgstr "RAGAS評価パラメータ"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:40
+msgid "RAGに用いた学習メモ (コンテキスト)"
+msgstr "RAGに用いた学習メモ (コンテキスト)"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:55
+msgid "質問に対する想定回答文 (Ground Truth)"
+msgstr "質問に対する想定回答文"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:63
+msgid "実際の回答文 (Actual Answer)"
+msgstr "実際の回答文"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:70
+msgid "RAGAS評価結果"
+msgstr "RAGAS評価結果"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:75
+#: rag_app/templates/rag_app/rag_evaluation_list.html:22
+msgid "Faithfulness"
+msgstr "Faithfulness"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:76
+#: rag_app/templates/rag_app/rag_evaluation_list.html:23
+msgid "Answer Relevancy"
+msgstr "Answer Relevancy"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:77
+#: rag_app/templates/rag_app/rag_evaluation_list.html:24
+msgid "Context Precision"
+msgstr "Context Precision"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:78
+#: rag_app/templates/rag_app/rag_evaluation_list.html:25
+msgid "Context Recall"
+msgstr "Context Recall"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:94
+msgid "備考"
+msgstr "備考"
+
+#: rag_app/templates/rag_app/rag_evaluation_detail.html:101
+msgid "ログ作成日時"
+msgstr "ログ作成日時"
+
+#: rag_app/templates/rag_app/rag_evaluation_form.html:5
+#: rag_app/templates/rag_app/rag_evaluation_form.html:8
+msgid "RAG評価を編集"
+msgstr "RAG評価を編集"
+
+#: rag_app/templates/rag_app/rag_evaluation_form.html:5
+#: rag_app/templates/rag_app/rag_evaluation_form.html:8
+#: rag_app/templates/rag_app/rag_evaluation_list.html:10
+msgid "新しいRAG評価を作成"
+msgstr "新しいRAG評価を作成"
+
+#: rag_app/templates/rag_app/rag_evaluation_form.html:20
+#: rag_config_log/templates/rag_config_log/rag_config_form.html:5
+#: rag_config_log/templates/rag_config_log/rag_config_form.html:8
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:10
+msgid "新しいAIエージェント構成を作成"
+msgstr "新しいAIエージェント構成を作成"
+
+#: rag_app/templates/rag_app/rag_evaluation_list.html:5
+msgid "RAG評価ログ一覧"
+msgstr "RAG評価ログ一覧"
+
+#: rag_app/templates/rag_app/rag_evaluation_list.html:26
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:25
+msgid "操作"
+msgstr "操作"
+
+#: rag_app/templates/rag_app/rag_evaluation_list.html:57
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:63
+#: todo_app/templates/todo_app/todo_list.html:37
+msgid "前へ"
+msgstr "前へ"
+
+#: rag_app/templates/rag_app/rag_evaluation_list.html:67
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:73
+#: todo_app/templates/todo_app/todo_list.html:47
+msgid "次へ"
+msgstr "次へ"
+
+#: rag_app/templates/rag_app/rag_evaluation_list.html:75
+msgid "まだRAG評価ログがありません。"
+msgstr "まだRAG評価ログがありません。"
+
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:4
+msgid "AIエージェント構成を削除"
+msgstr "AIエージェント構成を削除"
+
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:8
+msgid "本当にこのAIエージェント構成を削除しますか？"
+msgstr "本当にこのAIエージェント構成を削除しますか？"
+
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:9
+msgid ""
+"以下のAIエージェント構成ログが完全に削除されます。この操作は元に戻せません。"
+msgstr ""
+"以下のAIエージェント構成ログが完全に削除されます。この操作は元に戻せません。"
+
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:11
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:18
+msgid "AIエージェント構成名"
+msgstr "AIエージェント構成名"
+
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:13
+msgid "種類"
+msgstr "種類"
+
+#: rag_config_log/templates/rag_config_log/rag_config_confirm_delete.html:16
+msgid "このログに関連する評価ログもすべて削除されます。"
+msgstr "このログに関連する評価ログもすべて削除されます。"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:6
+msgid "AIエージェント構成詳細"
+msgstr "AIエージェント構成詳細"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:18
+msgid "ツール"
+msgstr "ツール"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:22
+msgid "見本にした構成"
+msgstr "見本にした構成"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:35
+msgid "詳細説明"
+msgstr "詳細説明"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:43
+msgid "使用した学習メモ"
+msgstr "使用した学習メモ"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:58
+msgid "このAIエージェント構成には、使用された学習メモが登録されていません。"
+msgstr "このAIエージェント構成には、使用された学習メモが登録されていません。"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:62
+msgid "この構成に関連する評価ログ"
+msgstr "この構成に関連する評価ログ"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:69
+#: templates/search_results.html:96
+msgid "質問"
+msgstr "質問"
+
+#: rag_config_log/templates/rag_config_log/rag_config_detail.html:77
+msgid "このAIエージェント構成に関連する評価ログはまだありません。"
+msgstr "このAIエージェント構成に関連する評価ログはまだありません。"
+
+#: rag_config_log/templates/rag_config_log/rag_config_form.html:5
+#: rag_config_log/templates/rag_config_log/rag_config_form.html:8
+msgid "AIエージェント構成を編集"
+msgstr "AIエージェント構成を編集"
+
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:5
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:9
+msgid "AIエージェント構成一覧"
+msgstr "AIエージェント構成一覧"
+
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:19
+msgid "LLM / Embedding"
+msgstr "LLM / Embedding"
+
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:20
+msgid "ツール / 種類"
+msgstr "ツール / 種類"
+
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:22
+msgid "使用した学習メモ数"
+msgstr "使用した学習メモ数"
+
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:40
+msgid "なし"
+msgstr "なし"
+
+#: rag_config_log/templates/rag_config_log/rag_config_list.html:81
+msgid "まだAIエージェント構成ログがありません。"
+msgstr "まだAIエージェント構成情報がありません。"
+
+#: templates/base.html:7 templates/base.html:40 templates/base.html:127
+msgid "GenAI Learning Log"
+msgstr "GenAI Learning Log"
+
+#: templates/base.html:51
+msgid "ToDo管理"
+msgstr "ToDo管理"
+
+#: templates/base.html:58
+msgid "RAG評価関連"
+msgstr "RAG評価関連"
+
+#: templates/base.html:66
+msgid "アプリ内検索"
+msgstr "アプリ内検索"
+
+#: templates/base.html:67
+msgid "検索"
+msgstr "検索"
+
+#: templates/base.html:73
+msgid "言語"
+msgstr "言語"
+
+#: templates/base.html:80
+msgid "日本語"
+msgstr "日本語"
+
+#: templates/base.html:83
+msgid "English"
+msgstr "English"
+
+#: templates/base.html:91
+msgid "ようこそ"
+msgstr "ようこそ"
+
+#: templates/base.html:91
+msgid "さん"
+msgstr "さん"
+
+#: templates/base.html:96 templates/registration/logged_out.html:4
+msgid "ログアウト"
+msgstr "ログアウト"
+
+#: templates/base.html:101 templates/registration/login.html:3
+#: templates/registration/login.html:10 templates/registration/login.html:38
+#: templates/registration/password_reset_complete.html:16
+msgid "ログイン"
+msgstr "ログイン"
+
+#: templates/base.html:114
+msgid "Close"
+msgstr "閉じる"
+
+#: templates/base.html:125
+msgid "トップに戻る"
+msgstr "トップに戻る"
+
+#: templates/base.html:128
+msgid "このアプリはDjangoとBootstrap 5を使用して構築されています。"
+msgstr "このアプリはDjangoとBootstrap 5を使用して構築されています。"
+
+#: templates/registration/logged_out.html:11
+msgid "ログアウトしました"
+msgstr "ログアウトしました"
+
+#: templates/registration/logged_out.html:14
+msgid "ご利用ありがとうございました。"
+msgstr "ご利用ありがとうございました。"
+
+#: templates/registration/logged_out.html:15
+msgid "再度ログインする"
+msgstr "再度ログインする"
+
+#: templates/registration/logged_out.html:17
+msgid "メモ一覧へ戻る"
+msgstr "メモ一覧へ戻る"
+
+#: templates/registration/login.html:15
+msgid "ユーザー名またはパスワードが正しくありません。"
+msgstr "ユーザー名またはパスワードが正しくありません。"
+
+#: templates/registration/login.html:21
+msgid "このページにアクセスするには、ログインが必要です。"
+msgstr "このページにアクセスするには、ログインが必要です。"
+
+#: templates/registration/login.html:28
+msgid "ユーザー名"
+msgstr "ユーザー名"
+
+#: templates/registration/login.html:32
+msgid "パスワード"
+msgstr "パスワード"
+
+#: templates/registration/login.html:36
+msgid "パスワードを忘れた方はこちら"
+msgstr "パスワードを忘れた方はこちら"
+
+#: templates/registration/login.html:42
+msgid "アカウントをお持ちでないですか？"
+msgstr "アカウントをお持ちでないですか？"
+
+#: templates/registration/login.html:42
+msgid "管理画面でユーザーを作成"
+msgstr "管理画面でユーザーを作成"
+
+#: templates/registration/password_reset_complete.html:3
+msgid "パスワード変更完了"
+msgstr "パスワード変更完了"
+
+#: templates/registration/password_reset_complete.html:10
+msgid "パスワードが正常に変更されました"
+msgstr "パスワードが正常に変更されました"
+
+#: templates/registration/password_reset_complete.html:14
+msgid "新しいパスワードを使ってログインしてください。"
+msgstr "新しいパスワードを使ってログインしてください。"
+
+#: templates/registration/password_reset_confirm.html:3
+#: templates/registration/password_reset_confirm.html:10
+msgid "新しいパスワードを設定"
+msgstr "新しいパスワードを設定"
+
+#: templates/registration/password_reset_confirm.html:24
+msgid "パスワードを変更"
+msgstr "パスワードを変更"
+
+#: templates/registration/password_reset_done.html:3
+msgid "パスワードリセット完了"
+msgstr "パスワードリセット完了"
+
+#: templates/registration/password_reset_done.html:10
+msgid "パスワードリセットメールを送信しました"
+msgstr "パスワードリセットメールを送信しました"
+
+#: templates/registration/password_reset_done.html:14
+msgid ""
+"ご指定のメールアドレスにパスワードリセット用のリンクを送信しました。メールを"
+"ご確認ください。"
+msgstr ""
+"ご指定のメールアドレスにパスワードリセット用のリンクを送信しました。メールを"
+"ご確認ください。"
+
+#: templates/registration/password_reset_done.html:17
+msgid ""
+"もし数分経ってもメールが届かない場合は、迷惑メールフォルダをご確認いただく"
+"か、もう一度お試しください。"
+msgstr ""
+"もし数分経ってもメールが届かない場合は、迷惑メールフォルダをご確認いただく"
+"か、もう一度お試しください。"
+
+#: templates/registration/password_reset_form.html:3
+msgid "パスワードリセット"
+msgstr "パスワードリセット"
+
+#: templates/registration/password_reset_form.html:10
+msgid "パスワードをリセット"
+msgstr "パスワードをリセット"
+
+#: templates/registration/password_reset_form.html:14
+msgid ""
+"パスワードをリセットするためのリンクをメールで送信します。ユーザー登録時の"
+"メールアドレスを入力してください。"
+msgstr ""
+"パスワードをリセットするためのリンクをメールで送信します。ユーザー登録時の"
+"メールアドレスを入力してください。"
+
+#: templates/registration/password_reset_form.html:27
+msgid "パスワードリセットメールを送信"
+msgstr "パスワードリセットメールを送信"
+
+#: templates/search_results.html:4 templates/search_results.html:8
+msgid "検索結果"
+msgstr "検索結果"
+
+#: templates/search_results.html:12
+msgid "キーワード"
+msgstr "キーワード"
+
+#: templates/search_results.html:12
+msgid "に一致する結果が以下のカテゴリで見つかりました。"
+msgstr "に一致する結果が以下のカテゴリで見つかりました。"
+
+#: templates/search_results.html:15
+msgid "検索キーワードを入力してください。"
+msgstr "検索キーワードを入力してください。"
+
+#: templates/search_results.html:44
+msgid "ToDo"
+msgstr "ToDo"
+
+#: templates/search_results.html:60
+#: todo_app/templates/todo_app/todo_confirm_delete.html:12
+#: todo_app/templates/todo_app/todo_list.html:28
+msgid "関連メモ"
+msgstr "関連メモ"
+
+#: templates/search_results.html:111
+msgid "検索キーワード"
+msgstr "検索キーワード"
+
+#: templates/search_results.html:111
+msgid "に一致する結果は見つかりませんでした。"
+msgstr "に一致する結果は見つかりませんでした。"
+
+#: todo_app/templates/todo_app/todo_confirm_delete.html:4
+msgid "ToDoを削除"
+msgstr "ToDoを削除"
+
+#: todo_app/templates/todo_app/todo_confirm_delete.html:8
+msgid "本当にこのToDoを削除しますか？"
+msgstr "本当にこのToDoを削除しますか？"
+
+#: todo_app/templates/todo_app/todo_confirm_delete.html:9
+msgid "以下のToDoが完全に削除されます。この操作は元に戻せません。"
+msgstr "以下のToDoが完全に削除されます。この操作は元に戻せません。"
+
+#: todo_app/templates/todo_app/todo_confirm_delete.html:11
+msgid "タスク名"
+msgstr "タスク名"
+
+#: todo_app/templates/todo_app/todo_confirm_delete.html:13
+#: todo_app/templates/todo_app/todo_detail.html:15
+msgid "期限日"
+msgstr "期限日"
+
+#: todo_app/templates/todo_app/todo_confirm_delete.html:16
+msgid "このToDoに関連するすべてのデータが失われます。"
+msgstr "このToDoに関連するすべてのデータが失われます。"
+
+#: todo_app/templates/todo_app/todo_detail.html:4
+msgid "ToDo詳細"
+msgstr "ToDo詳細"
+
+#: todo_app/templates/todo_app/todo_detail.html:13
+msgid "関連学習メモ"
+msgstr "関連学習メモ"
+
+#: todo_app/templates/todo_app/todo_detail.html:16
+msgid "ステータス"
+msgstr "ステータス"
+
+#: todo_app/templates/todo_app/todo_form.html:4
+#: todo_app/templates/todo_app/todo_form.html:7
+msgid "ToDoを編集"
+msgstr "ToDoを編集"
+
+#: todo_app/templates/todo_app/todo_form.html:4
+#: todo_app/templates/todo_app/todo_form.html:7
+#: todo_app/templates/todo_app/todo_list.html:9
+msgid "新しいToDoを作成"
+msgstr "新しいToDoを作成"
+
+#: todo_app/templates/todo_app/todo_list.html:4
+#: todo_app/templates/todo_app/todo_list.html:8
+msgid "ToDo一覧"
+msgstr "ToDo一覧"
+
+#: todo_app/templates/todo_app/todo_list.html:55
+msgid "まだToDoがありません。"
+msgstr "まだToDoがありません。"
